@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buddy 12週旅程</title>
+<style>
+:root{
+  --navy:#1F3A5F; --navy-lt:#E8EDF3; --green:#2E7D5B; --green-lt:#E3F0EA;
+  --green-br:#3DA574; --orange:#E07A3F; --grey:#5A5A5A; --grey-lt:#F4F5F7;
+  --line:#E2E5EA; --ink:#20242B; --white:#fff;
+  --s1:#2E7D5B; --s2:#1F3A5F; --s3:#E07A3F;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;}
+body{background:var(--grey-lt);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px 80px;}
+
+/* header */
+.top{background:var(--navy);color:#fff;padding:26px 0 22px;margin-bottom:0;}
+.top .wrap{padding-bottom:0;}
+.brand{font-size:13px;letter-spacing:.14em;color:var(--green-br);font-weight:700;margin-bottom:6px;}
+.top h1{font-size:30px;font-weight:800;letter-spacing:.01em;}
+.top .sub{font-size:15px;color:#B9C6D6;margin-top:6px;}
+.top .pill{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);
+  border-radius:999px;padding:4px 14px;font-size:12.5px;color:#DCE6F0;margin-top:14px;}
+
+/* view tabs */
+.tabs{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line);
+  box-shadow:0 1px 8px rgba(0,0,0,.04);}
+.tabs .wrap{display:flex;gap:6px;padding-top:0;padding-bottom:0;}
+.tab{appearance:none;border:0;background:none;padding:16px 20px;font-size:15px;font-weight:700;
+  color:var(--grey);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;white-space:nowrap;}
+.tab:hover{color:var(--navy);}
+.tab.on{color:var(--navy);border-bottom-color:var(--green-br);}
+.tab .n{display:inline-flex;width:20px;height:20px;border-radius:50%;background:var(--green-lt);
+  color:var(--green);font-size:12px;align-items:center;justify-content:center;margin-right:7px;font-weight:800;vertical-align:1px;}
+.tab.on .n{background:var(--green-br);color:#fff;}
+
+.view{display:none;padding-top:30px;}
+.view.on{display:block;animation:fade .25s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+.lead{font-size:15.5px;color:var(--grey);max-width:760px;margin-bottom:26px;}
+.lead b{color:var(--navy);}
+
+/* ===== VIEW 1: journey overview ===== */
+.stage-band{display:flex;gap:10px;margin-bottom:14px;}
+.stage-tag{flex:1;border-radius:10px;padding:10px 14px;color:#fff;font-weight:700;font-size:14px;text-align:center;}
+.phase-row{display:grid;grid-template-columns:repeat(14,1fr);gap:6px;margin-bottom:8px;}
+.wk{position:relative;border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px 6px;
+  cursor:pointer;transition:.16s;text-align:center;min-height:92px;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-start;gap:4px;}
+.wk:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(31,58,95,.14);border-color:var(--green-br);}
+.wk .wnum{font-size:12.5px;font-weight:800;color:#fff;border-radius:6px;padding:1px 8px;line-height:1.5;}
+.wk .wt{font-size:10.5px;color:var(--ink);font-weight:600;line-height:1.35;}
+.wk .wc{font-size:9px;color:var(--grey);margin-top:auto;}
+.wk.milestone{border-color:var(--orange);border-width:2px;box-shadow:0 2px 10px rgba(224,122,63,.18);}
+.wk.bookend{background:var(--navy-lt);}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin:18px 0 4px;font-size:12.5px;color:var(--grey);}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.dot{width:12px;height:12px;border-radius:4px;display:inline-block;}
+
+/* ===== VIEW 2: four services ===== */
+.hub{display:grid;grid-template-columns:1fr;gap:16px;}
+.svc{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.svc-h{display:flex;align-items:center;gap:14px;padding:16px 20px;background:var(--green);color:#fff;}
+.svc-h .ico{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.16);
+  display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;flex-shrink:0;}
+.svc-h .ti{font-size:17px;font-weight:800;}
+.svc-h .fr{font-size:12.5px;color:#CDE7DA;margin-top:1px;}
+.svc-b{display:grid;grid-template-columns:1fr 1fr 1.3fr;}
+.svc-b>div{padding:14px 20px;border-right:1px solid var(--line);}
+.svc-b>div:last-child{border-right:0;}
+.svc-b .k{font-size:11.5px;font-weight:800;letter-spacing:.04em;margin-bottom:6px;text-transform:uppercase;}
+.svc-b .before .k{color:var(--grey);}
+.svc-b .after .k{color:var(--green);}
+.svc-b .role .k{color:var(--orange);}
+.svc-b p{font-size:13.5px;color:var(--ink);}
+.knit{background:var(--navy);color:#fff;border-radius:14px;padding:22px 26px;margin-top:20px;}
+.knit b{color:var(--green-br);}
+.knit .t{font-size:16px;font-weight:800;margin-bottom:8px;}
+.knit p{font-size:14px;color:#D3DEEA;}
+
+/* ===== VIEW 3: 衛教 forms ===== */
+.forms-intro{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:26px;}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
+.pcard .h{font-weight:800;color:var(--navy);font-size:15px;margin-bottom:6px;}
+.pcard p{font-size:13px;color:var(--grey);}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.fex{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+.fex .fh{padding:11px 16px;background:var(--green-lt);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:9px;}
+.fex .fh .wb{font-size:11px;font-weight:800;color:#fff;background:var(--green);border-radius:5px;padding:1px 7px;}
+.fex .fh .ft{font-size:13.5px;font-weight:700;color:var(--navy);}
+.fex .fb{padding:14px 16px;}
+.fex .form-type{display:inline-block;font-size:11px;font-weight:700;color:var(--orange);
+  background:#FCEEE4;border-radius:5px;padding:2px 8px;margin-bottom:8px;}
+.fex .fb p{font-size:13px;color:var(--ink);}
+
+/* ===== modal (week detail) ===== */
+.mask{position:fixed;inset:0;background:rgba(20,28,40,.55);z-index:80;display:none;
+  align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;}
+.mask.on{display:flex;animation:fade .2s;}
+.modal{background:#fff;border-radius:16px;max-width:760px;width:100%;overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.35);}
+.mh{padding:22px 28px 18px;color:#fff;position:relative;}
+.mh .mtag{font-size:12px;font-weight:700;letter-spacing:.08em;opacity:.9;}
+.mh .mtitle{font-size:22px;font-weight:800;margin-top:4px;}
+.mh .msub{font-size:13.5px;opacity:.92;margin-top:6px;font-weight:400;line-height:1.5;}
+.mh .x{position:absolute;top:18px;right:20px;width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.18);border:0;color:#fff;font-size:20px;cursor:pointer;line-height:1;}
+.mh .x:hover{background:rgba(255,255,255,.32);}
+.mb{padding:22px 28px 28px;max-height:60vh;overflow-y:auto;}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.pair .pc{border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+.pair .pc .pl{font-size:11px;font-weight:800;letter-spacing:.03em;margin-bottom:4px;}
+.pair .ex .pl{color:var(--green);}
+.pair .nu .pl{color:var(--orange);}
+.pair .pc .pd{font-size:12px;color:var(--grey);margin-bottom:4px;font-weight:600;}
+.pair .pc .pa{font-size:12.5px;color:var(--ink);}
+.sec{margin-bottom:18px;}
+.sec .st{font-size:13.5px;font-weight:800;color:var(--navy);margin-bottom:8px;
+  display:flex;align-items:center;gap:8px;}
+.sec .st .si{width:20px;height:20px;border-radius:6px;background:var(--green-lt);color:var(--green);
+  font-size:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:800;}
+.sec ul{list-style:none;}
+.sec li{font-size:13px;color:var(--ink);padding:3px 0 3px 16px;position:relative;}
+.sec li:before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;border-radius:50%;background:var(--green-br);}
+.hookbox{background:var(--grey-lt);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;
+  padding:10px 14px;font-size:12.5px;color:var(--ink);}
+.buddybox{background:var(--green-lt);border-radius:10px;padding:12px 14px;font-size:13px;}
+.buddybox .bl{font-weight:800;color:var(--green);margin-right:6px;}
+.btns{margin-top:8px;font-size:12px;color:var(--navy);}
+.btns b{color:var(--grey);}
+.tp-mini{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:12.5px;margin-top:4px;}
+.tp-mini .tk{font-weight:700;color:var(--navy);white-space:nowrap;}
+.tp-mini .tv{color:var(--ink);}
+/* ===== VIEW 4: weekly/daily runtime ===== */
+.principles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px;}
+.prin{border-radius:10px;padding:12px 14px;color:#fff;position:relative;overflow:hidden;}
+.prin .pn{font-size:11px;font-weight:800;opacity:.85;letter-spacing:.05em;}
+.prin .pt{font-size:15px;font-weight:800;margin:2px 0 4px;}
+.prin .pd{font-size:11.5px;line-height:1.5;opacity:.95;}
+.p1{background:#3B7A57;} .p2{background:#1F3A5F;} .p3{background:#C86B2B;} .p4{background:#7A4E8C;}
+.runtime{display:grid;grid-template-columns:1.35fr 1fr;gap:26px;align-items:start;}
+@media(max-width:900px){.runtime{grid-template-columns:1fr;}.principles{grid-template-columns:1fr 1fr;}}
+.tl-head{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;}
+.tl-head .wk{font-size:12px;font-weight:800;color:#fff;background:var(--s1);border-radius:6px;padding:2px 10px;}
+.tl-head h3{font-size:19px;font-weight:800;color:var(--navy);}
+.tl-sub{font-size:13px;color:var(--grey);margin-bottom:18px;}
+.timeline{position:relative;}
+.tl-day{margin-bottom:10px;}
+.tl-daylabel{font-size:12px;font-weight:800;color:var(--navy);background:var(--navy-lt);border-radius:6px;
+  padding:3px 10px;display:inline-block;margin-bottom:8px;}
+.msg{display:flex;gap:12px;padding:11px 13px;border:1px solid var(--line);border-radius:11px;background:#fff;
+  cursor:pointer;transition:.14s;margin-bottom:8px;align-items:flex-start;}
+.msg:hover{border-color:var(--green-br);box-shadow:0 5px 16px rgba(31,58,95,.1);transform:translateX(2px);}
+.msg.act{border-color:var(--green-br);border-width:2px;background:var(--green-lt);}
+.msg .time{font-size:12px;font-weight:800;color:var(--grey);white-space:nowrap;padding-top:1px;min-width:44px;}
+.msg .body{flex:1;}
+.msg .mt{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.msg .mm{font-size:12px;color:var(--grey);line-height:1.5;}
+.msg .tags{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
+.tag-p{font-size:10.5px;font-weight:800;color:#fff;border-radius:5px;padding:1px 7px;}
+.tag-c{font-size:10.5px;font-weight:700;color:var(--grey);background:var(--grey-lt);border-radius:5px;padding:1px 7px;}
+.tag-svc{font-size:10.5px;font-weight:700;border-radius:5px;padding:1px 7px;background:var(--green-lt);color:var(--green);}
+
+/* phone */
+.phone-wrap{position:sticky;top:80px;}
+.phone{width:300px;margin:0 auto;background:#0B1F16;border-radius:32px;padding:12px 10px 16px;
+  box-shadow:0 20px 50px rgba(0,0,0,.28);border:2px solid #0B1F16;}
+.phone .notch{width:110px;height:20px;background:#0B1F16;border-radius:0 0 14px 14px;margin:0 auto 6px;}
+.pscreen{background:#111C17;border-radius:22px;overflow:hidden;min-height:480px;display:flex;flex-direction:column;}
+.pbar{background:#1B7A47;color:#fff;padding:12px 14px;display:flex;align-items:center;gap:9px;}
+.pbar .av{width:30px;height:30px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.pbar .nm{font-size:14px;font-weight:800;}
+.pbar .st{font-size:10px;opacity:.85;margin-top:-2px;}
+.pbody{flex:1;padding:16px 12px;display:flex;flex-direction:column;gap:10px;background:linear-gradient(180deg,#0F1A14,#0C1611);}
+.pday{align-self:center;font-size:10px;color:#7FA890;background:rgba(255,255,255,.06);border-radius:10px;padding:2px 12px;}
+.bmsg{align-self:flex-start;max-width:82%;background:#EAF4EE;color:#16281E;border-radius:14px 14px 14px 4px;
+  padding:9px 12px;font-size:13px;line-height:1.5;box-shadow:0 1px 3px rgba(0,0,0,.15);}
+.bmsg .who{font-size:10px;font-weight:800;color:#1B7A47;margin-bottom:3px;}
+.pbtns{display:flex;flex-direction:column;gap:6px;align-self:flex-start;max-width:88%;width:88%;}
+.pbtn{background:#fff;border:1.5px solid #1B7A47;color:#1B7A47;border-radius:20px;padding:8px 12px;
+  font-size:12.5px;font-weight:700;text-align:center;}
+.pquiz{align-self:flex-start;max-width:88%;background:#fff;border-radius:14px;padding:11px;box-shadow:0 1px 3px rgba(0,0,0,.15);}
+.pquiz .q{font-size:12.5px;font-weight:700;color:#16281E;margin-bottom:8px;line-height:1.5;}
+.pquiz .opt{border:1.5px solid #D4E4DA;border-radius:10px;padding:8px 10px;font-size:12.5px;color:#16281E;margin-bottom:6px;font-weight:600;}
+.pquiz .opt:last-child{margin-bottom:0;}
+.umsg{align-self:flex-end;max-width:78%;background:#1B7A47;color:#fff;border-radius:14px 14px 4px 14px;padding:8px 12px;font-size:12.5px;}
+.pcaption{font-size:12px;color:var(--grey);text-align:center;margin-top:12px;font-style:italic;}
+.pill-hint{display:inline-block;font-size:11.5px;color:var(--green);background:var(--green-lt);border-radius:999px;padding:4px 12px;margin-bottom:14px;font-weight:700;}
+
+/* weekly overview table */
+.wktable{width:100%;border-collapse:collapse;margin-top:8px;background:#fff;border-radius:12px;overflow:hidden;
+  border:1px solid var(--line);}
+.wktable th{background:var(--navy);color:#fff;font-size:12.5px;font-weight:700;padding:10px 12px;text-align:left;}
+.wktable td{font-size:12.5px;padding:9px 12px;border-top:1px solid var(--line);vertical-align:top;}
+.wktable tr:nth-child(even) td{background:var(--grey-lt);}
+.wktable .wc{font-weight:800;color:#fff;border-radius:5px;padding:1px 8px;font-size:11px;}
+.wktable .use{white-space:nowrap;}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap">
+  <div class="brand">舞動陽光 × 國泰健康管理</div>
+  <h1>每日衡好 Buddy ｜ 12 週健康促進數位旅程</h1>
+  <div class="sub">從客戶進站到離站，把現場運動、微檢站量測、蛋白粉補充、衛教與關心，全部由一條 Buddy 數位旅程串接。</div>
+  <span class="pill">肌少症高風險族群 Pilot　·　對應學術發表 BMJ Open Quality (SQUIRE 2.0)</span>
+</div></div>
+
+<div class="tabs"><div class="wrap">
+  <button class="tab on" data-v="1"><span class="n">1</span>12 週旅程全貌</button>
+  <button class="tab" data-v="2"><span class="n">2</span>Buddy 如何串起整個專案</button>
+  <button class="tab" data-v="3"><span class="n">3</span>27 篇衛教內容地圖</button>
+  <button class="tab" data-v="4"><span class="n">4</span>每週每天怎麼跑</button>
+</div></div>
+
+<div class="wrap">
+<!-- VIEW CONTENT INJECTED BELOW -->
+<div id="views"></div>
+</div>
+
+<div class="mask" id="mask"><div class="modal" id="modal"></div></div>
+
+<script>
+const STAGE={S1:{name:"覺醒與基礎",col:"var(--s1)"},S2:{name:"協同與強化",col:"var(--s2)"},S3:{name:"生活與持衡",col:"var(--s3)"}};
+
+const WEEKS=[
+{w:"W0",st:null,book:1,t:"Onboarding 暖身週",c:"加入·認識",col:"var(--orange)",
+ sub:"活動正式開始前的暖身：讓客戶加入 Buddy、熟悉功能，Buddy 開始認識這個人。加入 Buddy＋填問卷＝旅程啟動。",
+ ex:null,nu:null,
+ msg:["這不是運動週，是暖身週——先讓客戶跟 Buddy 熟起來、Buddy 也開始認識客戶。","加入 Buddy＋填問卷就是旅程啟動（說明會早已辦完、加入是必然，不需再溝通）。","核心是問對 3 件事：客戶為什麼不運動、對肌少有沒有覺察、希望被怎麼陪——讓 Buddy 記住，後面 12 週才能對症溝通。"],
+ hook:"參考 sustain 旅程數據：有暖身、能主動互動的旅程，留存顯著優於單向 onboarding。W0 的價值不是「發通知」，是讓 Buddy 在正式開始前就『認識這個人』，後面每一週的溝通才精準。",
+ how:[["4 天暖身節奏","Day1 上傳照片、Day2 健康問答（3 大問題）、Day3 阻礙情境深挖、Day4 飲食總結——四天把 Buddy 的功能摸過一遍，純對話、不需儀器。"],["3 大問題是關鍵","阻礙（怎麼推）＋覺察（從哪個認知起點講）＋期待（用什麼語氣陪），問到這三面，Buddy 才懂這個人。"],["讓客戶先『動起來』","重點是讓客戶開始跟 Buddy 互動、熟悉功能，不是塞知識。暖身完，W1 才接得順。"]],
+ open:"嗨，我是 Buddy！接下來我會陪你一起改善肌肉健康。開始前，想先認識你一下——過去想運動卻沒真的動起來，你覺得最大的卡點是什麼？",
+ btn:"沒時間／沒動力／怕受傷／不知道怎麼做",
+ rag:null,
+ onboard:[
+   ["Day 1","邀請上傳照片","體驗 Buddy 的拍照分析功能。邀請上傳一餐或自己的照片，破冰、建立飲食現況印象。"],
+   ["Day 2","健康問答（3 大問題）","阻礙／覺察／期待各一題。這是 W0 的核心，讓 Buddy 記住這個人為什麼沒開始、對肌少的 awareness、想被怎麼陪。"],
+   ["Day 3","運動阻礙情境深挖","延續 Day2 答案往下挖具體樣貌（如選『沒動力』→ 一忙就忘／累不想動／一個人懶得動／看不到效果就放棄），Buddy 精準記住卡點。"],
+   ["Day 4","飲食總結","Buddy 回饋這幾天理解到什麼，體驗個人化建議，讓客戶感覺『它真的懂我』，暖身收尾、接軌 W1。"],
+ ],
+ tp:[["功能熟悉","4 天讓客戶摸過拍照、問答、對話、個人化建議"],["問卷啟動","加入＋填問卷＝旅程正式啟動"],["為 W1 鋪路","Buddy 帶著對客戶的理解進入 W1"]]},
+
+{w:"W1",st:"S1",t:"肌肉決定生活品質",c:"課程正式啟動",col:"var(--s1)",
+ sub:"第一印象週：先讓客戶「認同肌肉值得投資」，動機才立得住。",
+ ex:["W1 肌肉決定你的生活品質","肌肉「用進廢退」，是可重建的組織；中年是最重要的存款期。"],
+ nu:["1 肌肉是你的健康銀行","肌肉是會分泌激素的「內分泌器官」，量與質決定健康底氣。"],
+ msg:["肌肉不是老人才要擔心——30 歲後就流失，中年是關鍵存款期。","肌肉像「健康銀行」：現在怎麼存，未來就怎麼用。","不管幾歲，肌肉都能靠運動＋營養重新長回來。"],
+ hook:"很多人以為肌少症是老年病，但「爬樓梯喘、起身要撐」往往不是年齡而是肌肉。講成「你每天生活的底氣」比講「預防肌少症」更打中人。",
+ how:[["「銀行存款」比喻圖卡","左邊存款期、右邊提款期，一句『你現在怎麼存，未來就怎麼用』。"],["互動小測","『你的肌肉存款夠嗎？』3 題自評，測完給鼓勵，不評分不貼標籤。"],["第一印象溫暖不說教","語氣像朋友，數據放進 RAG，不塞主訊息。"]],
+ open:"這禮拜我們先聊一件重要的事——你的肌肉，其實是一座「健康銀行」。想花 30 秒測測你的存款嗎？",
+ btn:"好啊測測看／肌肉銀行是什麼／等等再說",
+ rag:["肌少症是老人才有的嗎？","我體重正常也會有肌少風險嗎？","肌肉真的能重新長回來嗎？"],
+ tp:[["課前＋微檢站","第一週課前提醒；可到微檢站量測，開始累積個人基線（DEXA 基準已於入案前完成，強調自願）"],["課後恢復","『身體開機』關節活動度伸展"],["蛋白粉","建立節奏：『運動完補一包，幫肌肉存款』（蛋白粉入案前已領取）"],["本週回顧","從簡：『你完成第一週！』不放趨勢"],["主動鉤子","把 W0 目標選擇接到 W1 衛教"]]},
+
+{w:"W2",st:"S1",t:"蛋白質不是有吃就好",c:"建立每日蛋白補充習慣",col:"var(--s1)",
+ sub:"把「吃夠」變成客戶算得出來的數字，破除「有吃肉就夠」的錯覺。",
+ ex:["W2 認識不同訓練類型","阻力／有氧／伸展各司其職，肌肉成長主要靠阻力訓練。"],
+ nu:["2 蛋白質不是有吃就好（＋份量工具）","多數人以為有吃就夠，實際常不足；要吃夠份量。"],
+ msg:["有吃≠吃夠。多數人蛋白質攝取不足，尤其早餐。","需要量跟體重有關，可算出來（每公斤約 1.1–1.5 克）。","運動的人需求更高，蛋白粉是補足缺口的方便工具。"],
+ hook:"『我三餐都有吃肉』是最常見的誤解。用客戶體重算出『你一天需要 X 克 ≈ 幾份』，把抽象變具體，客戶會發現『原來早餐幾乎是零』。",
+ how:[["「算給你看」互動","輸入體重→回『你需要 XX 克 ≈ 幾掌心肉／幾包蛋白飲』。把份量表變互動工具。"],["「一天餐盤」圖","紅字標『多數人早餐蛋白質≈0』，製造落差。"],["蛋白粉自然帶入","『你今天還差 20 克，剛好一包補起來』——補缺口而非推銷。"]],
+ open:"問你一個問題——你覺得一天蛋白質吃夠了嗎？跟我說體重，我算給你看，可能會嚇一跳。",
+ btn:"算給我看／我應該夠吧／吃太多會怎樣",
+ rag:["我一天要吃多少蛋白質？","蛋白粉飯前還飯後吃？","蛋白質吃太多傷腎嗎？"],
+ tp:[["課前＋量測","帶入『量測能看到肌肉量變化』，量測連目標"],["課後恢復","對應部位伸展＋『配蛋白補充效果更好』"],["蛋白粉","連 W2：『這包補上早餐缺的那塊』"],["本週回顧","開始有量測數據：『你量了 2 次，很棒！』"],["主動鉤子","『想知道你早餐少了多少蛋白質嗎？』"]]},
+
+{w:"W3",st:"S1",t:"痠，還是痛？",c:"分辨痠與痛·安全上課",col:"var(--s1)",
+ sub:"安全感週：教客戶辨識正常痠痛與警訊，降低『怕受傷而放棄』的流失。",
+ ex:["W3 痠與痛的差異","延遲性痠痛是正常適應；尖銳／關節痛是警訊。"],
+ nu:["3 均分原則：別把蛋白質都留晚餐","三餐均分吸收利用最好，別集中晚餐。"],
+ msg:["運動後痠痠是正常的（延遲性痠痛），代表肌肉在適應。","但『尖銳痛、關節痛、越動越痛』是警訊，要停下來。","營養上：蛋白質三餐平均分配，比全擠晚餐有效。"],
+ hook:"新手最容易在第 2–3 週因『痠到懷疑受傷』退出。講清楚『痠 vs 痛』等於幫客戶建立安全感、敢繼續練。這週情緒價值大於知識價值。",
+ how:[["「痠還是痛？」選答","4 情境讓客戶選，判讀『繼續』或『回報教練』。"],["紅綠燈圖卡","綠燈正常／黃燈觀察／紅燈就醫，一眼分辨。"],["回報教練路徑","紅燈時直接給『回報教練』按鈕，數位接回現場專業。"]],
+ open:"這週聊很多人會擔心的事：運動完痠痠的到底正不正常？來玩個小測驗，教你分辨。",
+ btn:"來測／我最近正好有點痠／什麼情況要看醫生",
+ rag:["運動完全身痠正常嗎？","關節痛可以繼續練嗎？","痠痛時還要去上課嗎？"],
+ tp:[["課前＋微檢站","『還有點痠的話，量測時跟我說，幫你看要不要調整』（持續累積基線，先不急著比）"],["課後恢復","針對痠痛『肌肉修復深度伸展』＋紅綠燈原則"],["蛋白粉","『蛋白質幫修復，別全留晚餐』接 W3"],["本週回顧","本週講體感不看數字：『爬樓梯有沒有比較輕鬆？』肌力進步比肌肉量早出現"],["主動鉤子","『這週有哪裡痠得怪怪的？』關心型"]]},
+
+{w:"W4",st:"S1",t:"核心與柔韌",c:"第一階段收尾",col:"var(--s1)",
+ sub:"第一階段收尾：把『打底』的價值講清楚，銜接下階段強度提升。",
+ ex:["W4 核心穩定＋柔韌度","核心是所有動作的地基；柔韌度決定活動範圍與受傷風險。"],
+ nu:["4 優質蛋白挑選：豆魚蛋肉新順序","蛋白質來源優先序更新為『豆＞魚＞蛋＞肉』。"],
+ msg:["核心不是六塊肌，是保護腰椎、讓你站得穩的深層力量。","柔韌度決定動作範圍，也是防受傷關鍵。","選蛋白質有順序：豆＞魚＞蛋＞肉，植物性優先護血管。"],
+ hook:"核心和柔韌是『看不見成果』的訓練，最容易輕忽。用『地基』比喻——蓋房子沒人看得到地基，但地基決定房子穩不穩。",
+ how:[["「蓋房子」比喻圖","核心＝地基、四肢＝樓層，『地基沒打好，樓蓋越高越危險』。"],["「餐盤順序」小遊戲","讓客戶排序蛋白質來源，揭曉『豆魚蛋肉』新順序＋理由。趣味翻牌。"],["第一階段回顧","本週回顧做『覺醒基礎小結』，預告下階段『強度要上來了』。"]],
+ open:"蓋房子最重要的是看不見的地基。這週聊你身體的地基——核心。也玩個『蛋白質排排看』。",
+ btn:"玩排排看／核心怎麼練／我想知道我進步了嗎",
+ rag:["核心運動就是仰臥起坐嗎？","豆漿的蛋白質夠好嗎？","柔軟度差會怎樣？"],
+ tp:[["課前＋量測","進入『加強版起步』，安撫『跟著教練節奏就好』"],["課後恢復","核心與柔韌居家延伸"],["蛋白粉","『來源也有好壞，蛋白粉是補充不是取代真食物』"],["本週回顧","第一階段小結＋下階段預告"],["主動鉤子","『這 4 週你覺得有什麼變化？』自我覺察"]]},
+
+{w:"W5",st:"S2",t:"下肢與平衡",c:"微檢站·首次看趨勢",col:"var(--s2)",
+ sub:"進入強化階段：下肢最大肌群、最有感，用『有感』帶動信心。",
+ ex:["W5 下肢肌力＋平衡能力","下肢是最大肌群，力量與平衡直接決定跌倒風險與行動力。"],
+ nu:["5 長肌肉不只要蛋白質，也需要碳水","碳水提供訓練能量、幫蛋白質進肌肉，不是敵人。"],
+ msg:["下肢是全身最大肌群，練它最有感、CP 值最高。","平衡力就是防跌力，是『老得慢』最直接的指標。","別怕碳水——它是肌肉的燃料，缺了蛋白質也長不好。"],
+ hook:"很多想瘦的人把碳水當敵人，結果沒力氣練、肌肉也長不好。下肢又是最容易『感覺自己變強』的部位（爬樓梯變輕鬆）。雙管齊下。",
+ how:[["「爬樓梯」當進步標尺","『還記得 W1 爬樓梯的感覺嗎？這週有沒有比較不喘？』"],["「碳水是敵人？」翻牌","常見迷思翻牌破除恐懼。"],["平衡自我挑戰","『單腳站能撐幾秒？』記錄下來之後對照。"]],
+ open:"這週強度要上來囉！先問你——最近爬樓梯是不是比第一週輕鬆？另外破解大迷思：碳水真的是敵人嗎？",
+ btn:"真的變輕鬆了／還是很喘／碳水到底能不能吃",
+ rag:["減脂可以吃澱粉嗎？","深蹲膝蓋痛正常嗎？","怎麼練平衡防跌倒？"],
+ tp:[["課前＋微檢站","『快到一半了，這是第一次值得認真看趨勢——約第 4–5 週數字才開始有意義，跟第一週比比看』"],["課後恢復","『促進靜脈回流』腿部伸展"],["蛋白粉","『下肢很耗能，蛋白飲配一點碳水恢復更快』"],["本週回顧","首次趨勢對照（科學時機到了）：鼓勵回看 W1 起點，『先看趨勢不看單次』"],["主動鉤子","『單腳站你撐幾秒？』互動挑戰"]]},
+
+{w:"W6",st:"S2",t:"肌肉怎麼長大",c:"進階負荷起步",col:"var(--s2)",
+ sub:"把『漸進負荷』講白，讓客戶理解『為什麼要慢慢加重』。",
+ ex:["W6 漸進負荷與肌肉成長","肌肉靠『漸進超負荷』成長：給壓力→修復→變強。"],
+ nu:["6 關鍵胺基酸：白胺酸的威力","白胺酸是啟動肌肉合成的關鍵開關，乳清含量高。"],
+ msg:["肌肉長大原理：給它一點超過現在的壓力，修復後就變強。","所以課程慢慢加重——不是為難你，是變強的必經路。","白胺酸是『開啟長肌肉』的鑰匙，乳清蛋白含量特別高。"],
+ hook:"中期客戶會問『為什麼一直加重』『為什麼別人進步快』。講清漸進負荷讓客戶理解加重是設計；白胺酸這個『科學亮點』強化蛋白粉的價值認同。",
+ how:[["「修復變強」三格漫畫","壓力→微損傷→修復變強，三格講完超補償。"],["白胺酸當「亮點知識」","『蛋白飲裡有個叫白胺酸的東西，是開啟長肌肉的鑰匙』——講科學價值不誇大療效。"],["回應「別人進步快」","RAG 備好個體差異回答，安撫比較焦慮。"]],
+ open:"有沒有覺得重量變重了？這不是錯覺，是設計好的。這週告訴你肌肉變強的祕密——還有蛋白飲裡那把『長肌肉的鑰匙』。",
+ btn:"為什麼要加重／長肌肉的鑰匙是什麼／我進步算慢嗎",
+ rag:["為什麼運動要慢慢加重量？","乳清和植物蛋白哪個好？","我進步比別人慢正常嗎？"],
+ tp:[["課前＋量測","『今天可能再進一階，量測一下我幫你看適不適合』"],["課後恢復","漸進負荷相關恢復，強調修復"],["蛋白粉","價值高峰週：『運動後 30 分鐘這包，白胺酸把努力變成肌肉』"],["本週回顧","『運動小結』結合教練觀察＋數據"],["主動鉤子","『想知道蛋白飲藏了什麼祕密武器？』"]]},
+
+{w:"W7",st:"S2",t:"恢復也是訓練",c:"恢復日·強調休息",col:"var(--s2)",
+ sub:"破除『練越多越好』，把休息與睡眠正名為變強的必要條件。",
+ ex:["W7 恢復與修復","肌肉在休息時才長大；睡眠與恢復是訓練效果的一部分。"],
+ nu:["7 維生素 D 與鈣鎂：肌肉的導火線","維生素 D 與鈣鎂調控肌肉收縮，缺乏影響肌力。"],
+ msg:["肌肉不是在健身房長大的，是在你休息、睡覺時長大的。","練太多、睡太少，反而讓努力打折。","維生素 D、鈣、鎂是肌肉收縮『導火線』，缺了容易無力抽筋。"],
+ hook:"中期兩種人：一種怕不夠拼命加練到過勞，一種開始鬆懈。『恢復＝訓練的一部分』讓認真的人安心休息、鬆懈的人知道睡眠也算數。維生素 D 缺乏在台灣很普遍。",
+ how:[["顛覆式標題","『肌肉不是在健身房長大的』開場，製造反直覺注意力。"],["睡眠恢復自檢","『你恢復夠嗎？』3 題給溫和建議。"],["維生素 D 在地感","『台灣人普遍缺維生素 D，尤其上班族曬不到太陽』引起共鳴。"]],
+ open:"跟你說個反常識的事：肌肉其實不是在運動時長大的，是在你休息時。這週聊怎麼『休息得對』，還有一個台灣人普遍缺的營養素。",
+ btn:"測我恢復夠不夠／我常睡不好／維生素 D 怎麼補",
+ rag:["運動要每天做嗎？","睡不好會影響肌肉嗎？","維生素 D 怎麼補充？"],
+ tp:[["課前＋量測","『量一下，數據顯示你比較累就別硬拚』"],["課後恢復","『深度筋膜放鬆』＋睡前放鬆模組"],["蛋白粉","『不只蛋白質，維生素 D 鈣鎂也重要』擴展視野"],["本週回顧","『恢復回顧』關心睡眠疲勞"],["主動鉤子","『這週睡得好嗎？』睡眠關心"]]},
+
+{w:"W8",st:"S2",milestone:1,t:"期中對照：看見改變",c:"DEXA 中測·領粉",col:"var(--orange)",
+ sub:"旅程最關鍵節點：中測數據對照，把『有沒有效』變成客戶親眼看見的事實。",
+ ex:["W8 傷害處理與回歸原則","萬一受傷的初步處理（PEACE & LOVE）與安全回歸。"],
+ nu:["8 抗發炎飲食：減少肌肉流失的無形殺手","慢性發炎加速肌肉流失；抗發炎飲食是隱形防線。"],
+ msg:["走到一半了！這週中測，一起看看這 8 週你改變了什麼。","數據會說話：握力、坐站、肌肉量，哪怕小進步都值得記錄。","萬一受傷記住 PEACE & LOVE；日常用抗發炎飲食保護肌肉。"],
+ hook:"W8 中測是整條旅程的情緒高峰。前 8 週的堅持，這週要『兌現成看得見的數據』。包裝成『期中成績單』而非『檢查』。哪怕進步微小也要找到值得慶祝的點——決定後半程動機。",
+ how:[["中測做成「期中成績單」","Buddy 把 W0 vs W8 並排，highlight 進步項，慶祝語氣。"],["數據視覺化","前後對照長條圖，綠箭頭標進步，一眼看到成果。"],["領蛋白粉節點","W8 第二次領粉，提醒領取並鼓勵下半程。"],["受傷處理當「保險知識」","不製造恐懼，定位『萬一需要時的保命知識』輕帶過。"]],
+ open:"🎉 恭喜走到一半！這週中測，我把你第一週和現在的數據放在一起——想看看這 8 週身體發生了什麼變化嗎？",
+ btn:"看我的成績單／我有進步嗎／領蛋白粉",
+ rag:["中測沒進步怎麼辦？","運動拉傷了怎麼處理？","什麼是抗發炎飲食？"],
+ tp:[["課前＋量測","結合中測安排，提醒時間地點，語氣期待"],["課後恢復","額外『中場加油』鼓勵"],["蛋白粉","第二次領粉：『中場補給到囉，陪你走完下半場』"],["本週回顧","特別版『期中總報』：8 週完成度＋中測對照＋目標重設"],["主動鉤子","『下半程你最想加強哪一塊？』目標重設"]]},
+
+{w:"W9",st:"S3",t:"把力量用回生活",c:"微檢站·趨勢對照",col:"var(--s3)",
+ sub:"進入生活持衡：從『練肌肉』轉向『用肌肉過好生活』。",
+ ex:["W9 上肢肌力與日常功能","上肢力量對應搬、提、抱等日常功能。"],
+ nu:["9 運動後 30 分鐘營養黃金比例","運動後 30 分鐘補碳水與蛋白（約 3:1）恢復最佳。"],
+ msg:["練了 8 週的力量，這週學怎麼『用回生活』——搬東西、抱孫子、提菜籃。","上肢訓練不是為了線條，是為了生活不求人。","運動後 30 分鐘是黃金補充期，碳水:蛋白約 3:1。"],
+ hook:"後段客戶容易覺得『練這些幹嘛』。把訓練接回具體生活場景——搬水、抱孫子是不是比較不費力？在日常中『感覺變強』比數據更有說服力。",
+ how:[["「生活超人」情境卡","列日常場景，問『哪個變輕鬆了？』對應訓練成果。"],["黃金比例做成「超商組合」","『運動後這樣買：茶葉蛋＋地瓜』把 3:1 變購物清單。"],["連微檢站數據","『肌肉量變化，正好反映在你搬東西的感覺上』體感與數據互印。"]],
+ open:"問你一個生活化的問題——最近搬水、提東西，是不是比兩個月前輕鬆了？這週把力氣用回你的日常。",
+ btn:"真的變輕鬆了／還好耶／運動後該吃什麼",
+ rag:["運動後馬上吃會胖嗎？","運動後吃什麼最好？","上肢無力怎麼練？"],
+ tp:[["課前＋量測","轉『生活應用』語氣，『看看肌肉量存款成果』"],["課後恢復","『生活功能』相關伸展"],["蛋白粉","黃金比例主打：『運動後 30 分這包配香蕉，完美 3:1』"],["本週回顧","出現『生活改變』質性回顧（可作學術素材）"],["主動鉤子","『這週有沒有哪件事突然變輕鬆？』生活覺察"]]},
+
+{w:"W10",st:"S3",t:"別只顧重訓，心肺也要",c:"訓練強度高峰",col:"var(--s3)",
+ sub:"補上有氧拼圖，讓客戶理解『肌力＋心肺』才是完整健康。",
+ ex:["W10 有氧能力與心肺健康","有氧與阻力並重；心肺是整體健康與耐力的基礎。"],
+ nu:["10 阻力運動的進階指南","進階阻力訓練原則，如何持續給肌肉刺激。"],
+ msg:["練了這麼久肌力，別忘了心肺——兩個一起才完整。","有氧不用很激烈，快走、爬樓梯也算，重點是持續。","想更進階？肌肉需要持續一點新壓力才會繼續成長。"],
+ hook:"W10 客戶已是重訓熟手，容易偏食只做肌力。用『你已經有力氣了，但爬三層樓還會喘嗎？』點出心肺缺角。進階阻力指南滿足熟手『想要更多』。",
+ how:[["「木桶理論」圖","健康是木桶，肌力、心肺、柔韌是板子，最短的決定高度。"],["有氧「無痛融入」","『通勤早一站下車走／爬樓梯不搭電梯』降低門檻。"],["進階挑戰給熟手","備進階阻力建議，RAG 可深問，滿足高動機客戶。"]],
+ open:"你現在力氣一定進步很多——但考你一個：爬三層樓梯，還會喘嗎？這週補上健康的另一塊拼圖：心肺。",
+ btn:"會喘／不會喘了／怎麼練心肺",
+ rag:["有氧和重訓要分開做嗎？","快走算有氧運動嗎？","怎麼讓訓練繼續進步？"],
+ tp:[["課前＋量測","對應『心肺整合』，鼓勵嘗試心肺動作"],["課後恢復","『有氧與幫浦回流交替』"],["蛋白粉","『心肺也需恢復，想進階我有肌肉持續成長的祕訣』"],["本週回顧","加入『多面向』概念，別偏食單一運動"],["主動鉤子","『爬樓梯測試：你幾層樓才會喘？』"]]},
+
+{w:"W11",st:"S3",t:"變成離開也能做的事",c:"居家動作·畢業準備",col:"var(--s3)",
+ sub:"為『畢業』做準備：把課程動作轉成回家能自己做的習慣。",
+ ex:["W11 將運動融入生活","把訓練轉化為可長期持續的居家與生活習慣。"],
+ nu:["11 外食族的肌少防禦策略","外食也能吃夠蛋白、吃對比例的實用策略。"],
+ msg:["快畢業了——這週重點：離開運動中心後，你怎麼自己維持？","居家 3 個動作，不用器材，隨時能做，帶著走。","外食族也能防肌少：便利商店、自助餐這樣選就對了。"],
+ hook:"第 11 週開始處理『畢業焦慮』——客戶擔心結束後打回原形。講清『可持續性』：不是要你一輩子來，是把能力內化成習慣。外食策略解決最現實的維持障礙。這週是『能不能長期維持』的種子。",
+ how:[["「帶著走」居家包","精選 3 個居家動作做成圖卡或短影音，『不用器材、看電視也能做』。"],["外食「這樣點」實戰卡","便利商店／自助餐／早餐店各給『蛋白質這樣加』的具體建議。"],["預告 Buddy 會繼續陪","『畢業後 Buddy 還會用居家建議陪你』——讓客戶知道不是斷線，是換個形式繼續。"]],
+ open:"再兩週你就畢業了！這週最實用——教你 3 個回家自己就能做的動作，還有外食族怎麼吃才不會前功盡棄。",
+ btn:"居家動作教我／外食怎麼點／畢業後怎麼辦",
+ rag:["回家沒器材怎麼練？","外食怎麼吃夠蛋白質？","結束後會不會打回原形？"],
+ tp:[["課前＋量測","對應『居家可持續動作』，鼓勵記住要領"],["課後恢復","居家可持續動作完整教學"],["蛋白粉","『畢業後教你從日常食物吃夠，外食也有辦法』"],["本週回顧","加入『畢業準備』，盤點已建立的習慣"],["主動鉤子","『畢業後最擔心哪塊維持不了？』需求探詢（供居家方案設計參考）"]]},
+
+{w:"W12",st:"S3",t:"回頭看看起點",c:"為 W13 後測準備",col:"var(--s3)",
+ sub:"旅程情緒收尾：用完整數據前後對照，讓客戶為自己驕傲。",
+ ex:["W12 成果回顧與未來計畫","回顧 12 週的改變，建立可長期持續的個人化計畫。"],
+ nu:["12 聽懂肌肉的聲音：長期監測與心態","把短期計畫轉為長期習慣，學會長期監測與心態調整。"],
+ msg:["12 週到了。這週不上新東西，一起回頭看你走了多遠。","從 W0 到現在，你的數據、體感、習慣——都變了。","接下來最重要：把這 12 週變成往後的生活方式，不是結束。"],
+ hook:"W12 是情感高峰與收束。核心不是教新知識，是『幫客戶看見自己的改變並產生認同』。親眼看到 W0 vs W12 完整對照，那個『我真的做到了』是後測配合度與長期維持意願的總開關。",
+ how:[["「12 週的你」數據長卷","把所有量測、完成課程數、蛋白飲包數、互動次數做成回顧長圖，讓努力被看見。"],["情感化一句話總結","第一人稱陪伴：『這 12 週我一直看著你，從第一週的猶豫到現在，你真的變強了。』"],["未來計畫轉銜","接『未來計畫』，給『畢業後維持處方』，帶出後測與居家延續（W13）。"]],
+ open:"我們一起走到第 12 週了。這週我準備了一個東西——你從第一天到現在的完整紀錄。準備好回頭看看你走了多遠嗎？",
+ btn:"看我的 12 週回顧／我真的變強了嗎／之後怎麼維持",
+ rag:["結束後怎麼自己安排運動？","怎麼知道有沒有退步？","動力下降了怎麼辦？"],
+ tp:[["課前＋量測","預告『最後一次課程』與後測安排，語氣珍惜"],["課後恢復","『全身整合與柔韌緩和』象徵收束"],["蛋白粉","『你已經知道怎麼靠日常吃夠蛋白質了』確認內化"],["本週回顧","終極版＝12 週總回顧，為 W13 鋪陳"],["主動鉤子","『這 12 週最大的改變是什麼？』收集質性素材與口碑金句"]]},
+
+{w:"W13",st:null,book:1,t:"結業，看見你的 12 週",c:"DEXA 後測·成果驗收",col:"var(--orange)",
+ sub:"旅程收尾：完成 DEXA 後測（學術終點數據）、跟客戶一起看 12 週的成效，並預告接下來 Buddy 會用居家建議繼續陪著。",
+ ex:null,nu:null,
+ msg:["你完成了完整 12 週，這是很多人做不到的事。","後測是你的『畢業成績』——用 DEXA 正式看看這 12 週身體真正的改變，也讓你的努力成為幫助更多人的證據。","結業不是結束：接下來 Buddy 會用居家建議繼續陪你，把這 12 週養成的習慣延續下去。"],
+ hook:"這是把 Pilot 收成學術數據、也讓客戶帶著成就感畢業的收口週。後測用『來領成果』的正向框架，配合度最高；『Buddy 會繼續陪』讓客戶知道畢業後不會突然斷線、孤單面對。",
+ how:[["後測包裝「畢業典禮」","不是『來做最後檢查』，是『來領你 12 週的成果』。正向框架提升後測配合度（學術完成率關鍵）。"],["用 DEXA 前後對照講成效","入案前 vs W13 的 DEXA 數據並排，讓客戶親眼看到改變；即使某項變化小，也聚焦有進步的地方。"],["預告居家延續方案","輕輕帶出『畢業後 Buddy 會給你居家建議、陪你繼續』——形式待定（可能結合居家建議或教練設計），先讓客戶知道不會斷線。"],["質性回饋收好","『這 12 週最大的改變是什麼』是學術質性成果，也是未來的口碑素材。"]],
+ open:"你畢業了！🎓 這 12 週你完成了 XX 次課程。來做最後一次 DEXA，看看你身體真正的改變——也想聽聽你這一路的感受。畢業後我還會用居家建議繼續陪你喔！",
+ btn:"預約後測／看我的 12 週成果／給 Buddy 一句話",
+ rag:null,
+ tp:[["DEXA 後測","畢業典禮框架，用前後對照講成效"],["成果驗收","跟客戶一起看 12 週的改變"],["居家延續（預告）","預告 Buddy 會用居家建議繼續陪，形式待細節設計"]]},
+];
+
+// 主題貫穿框架：每週核心主題 × 運動扣題重點 × 營養扣題重點 × 環扣上週
+const THEMES={
+ W1:{theme:"肌肉值得你投資",ex:"肌肉用進廢退、可重建——運動就是存款的動作",nu:"肌肉是內分泌器官、健康銀行——吃是存款的材料",link:"旅程起點"},
+ W2:{theme:"長肌肉要「訊號＋材料」",ex:"認識訓練類型：阻力訓練是給肌肉的成長訊號",nu:"蛋白質份量：吃夠才有蓋肌肉的材料",link:"W1 知道要投資 → W2 知道怎麼投資"},
+ W3:{theme:"練完，怎麼照顧肌肉",ex:"痠與痛的差異：分辨安全、避免練壞",nu:"蛋白三餐均分：修復材料平均供應不斷料",link:"W2 知道怎麼練 → W3 知道練完怎麼顧"},
+ W4:{theme:"從「有做」到「做對」",ex:"核心與柔韌：動作品質決定安全與效益",nu:"豆魚蛋肉新順序：來源品質決定補得好不好",link:"W3 顧好基礎 → W4 升級品質（第一階段收尾）"},
+ W5:{theme:"練大肌群，給對能量",ex:"下肢肌力與平衡：最大肌群、最有感、防跌",nu:"碳水不是敵人：大肌群訓練需要燃料",link:"進入強化階段，從『基礎』到『有感輸出』"},
+ W6:{theme:"肌肉成長的兩個開關",ex:"漸進負荷：啟動成長的機械訊號",nu:"白胺酸：啟動合成的分子開關",link:"W5 練了大肌群 → W6 理解它為何會長大"},
+ W7:{theme:"看不見但缺不得的事",ex:"恢復與修復：肌肉在休息時才長大",nu:"維生素 D 與鈣鎂：隱形卻關鍵的營養",link:"W6 談成長 → W7 談成長的必要條件"},
+ W8:{theme:"期中對照，也學會保護肌肉",ex:"傷害處理與回歸：萬一受傷的保命知識",nu:"抗發炎飲食：對抗慢性發炎這個肌肉殺手",link:"中測看成果，同時學會保護前半程的成果"},
+ W9:{theme:"把力量用回生活",ex:"上肢與日常功能：搬、提、抱等生活場景",nu:"運動後黃金比例：當下補給的最佳時機",link:"進入生活持衡，從『練』轉『用』"},
+ W10:{theme:"把訓練拼圖補完整",ex:"有氧與心肺：補上耐力這塊",nu:"阻力運動進階：深化肌力刺激",link:"W9 用回生活 → W10 讓能力更全面"},
+ W11:{theme:"離開這裡也能維持",ex:"運動融入生活：居家可持續動作",nu:"外食族防禦策略：外食也能顧好蛋白",link:"為畢業準備，可持續性"},
+ W12:{theme:"把 12 週變成一輩子",ex:"成果回顧與計畫：個人化長期運動計畫",nu:"長期監測與心態：長期追蹤與習慣化",link:"收束，長期化"},
+};
+
+const CORE4=[
+ ["①","課前提醒＋量測邀請","運動課、微檢站","按鈕對話（選今天狀態）","推：課前提醒 ｜ 拉：邀請量測、回報狀態"],
+ ["②","課後恢復引導","運動課","圖卡＋短影音（對應當日部位）","推：恢復動作 ｜ 拉：『哪裡痠』回問"],
+ ["③","蛋白粉補充陪伴","蛋白粉","圖卡／趣味互動","推：每日溫和提醒 ｜ 拉：『怎麼吃』問 RAG"],
+ ["④","本週衛教主題","衛教（運動＋營養）","圖卡／互動對話／圖文，低字數","推：本週主題 ｜ 拉：埋 RAG 鉤子引導深問"],
+];
+const MECH2=[
+ ["⑤","本週回顧","把一週收攏","彈性節奏：前期輕量鼓勵，重點週（W5/W8/W12）才給完整數據回顧","推：本週總結 ｜ 拉：下週想加強什麼"],
+ ["⑥","主動互動","讓客戶開口（扣互動四原則）","提問／小測驗／選按鈕，引導客戶主動問 Buddy","純拉：誘發客戶開口、串起 RAG"],
+];
+
+const SERVICES=[
+ ["運","現場運動課","每週 2 次","上課，下課，結束。","課前 Buddy 提醒＋量測邀請；課後給對應部位恢復；本週回顧完成度。","把每一堂課接上『前中後』的數位陪伴。"],
+ ["測","微檢站量測","建議每次課前","量完看個數字就走。","數據自動進 Buddy；把單次數字變成趨勢解讀；連結目標與進步感。","溫和邀請（非強制），讓量測變成『看見改變』的工具。"],
+ ["粉","蛋白粉","每日 1 包","領了，可能忘了吃。","每日溫和提醒；連結當週衛教（份量／黃金比例／白胺酸）。","提醒＋賦予意義，讓吃粉不是任務是投資。"],
+ ["教","衛教（27 篇）","每週一主題","發文章，沒人看。","轉譯成圖卡／互動／小測；每週一主題；同時進 RAG 讓客戶主動問。","翻譯官＋知識庫：推得剛好、問得到答案。"],
+];
+
+const RAGFORMS=[
+ ["核心結論句","一句話講完重點","例：『30 歲後肌肉每十年少 3–8%，中年就要開始存。』"],
+ ["常見問題 FAQ","拆成 3–5 個客戶會問的具體問題","例：『蛋白粉要飯前還飯後吃？』『翻牌痠痛正常嗎？』"],
+ ["行動建議","可立即執行的一句話","例：『今天這餐先吃蛋白質再吃飯，順序換一下就好。』"],
+];
+
+const FORMEX=[
+ ["W1","肌肉存款互動測","趣味互動","『你的肌肉存款夠嗎？』3 題自評，測完給鼓勵，不評分不貼標籤。"],
+ ["W2","蛋白質算給你看","互動工具","輸入體重→回『你需要 XX 克 ≈ 幾包蛋白飲』。份量表變工具。"],
+ ["W3","痠還是痛紅綠燈","選答＋圖卡","4 情境選答，紅綠燈判讀，紅燈給『回報教練』按鈕。"],
+ ["W4","餐盤順序小遊戲","趣味翻牌","排序蛋白質來源，揭曉『豆魚蛋肉』新順序＋理由。"],
+ ["W5","碳水是敵人？翻牌","破迷思翻牌","常見迷思翻牌闢謠，破除碳水恐懼。"],
+ ["W8","期中成績單","數據視覺化","W0 vs W8 前後對照長條圖，綠箭頭標進步，慶祝語氣。"],
+ ["W9","超商補給組合","購物清單卡","『運動後這樣買：茶葉蛋＋地瓜』把 3:1 變可執行清單。"],
+ ["W12","12 週的你長卷","回顧長圖","所有數據、課程數、互動次數做成回顧長圖，讓努力被看見。"],
+];
+
+function stageColOf(w){ if(w.milestone)return"var(--orange)"; if(!w.st)return"var(--orange)"; return STAGE[w.st].col; }
+
+function view1(){
+  let cards=WEEKS.map((w,i)=>{
+    const col=stageColOf(w);
+    const cls="wk"+(w.milestone?" milestone":"")+(w.book?" bookend":"");
+    return `<div class="${cls}" onclick="openWk(${i})">
+      <span class="wnum" style="background:${col}">${w.w}</span>
+      <span class="wt">${w.t}</span>
+      <span class="wc">${w.c}</span></div>`;
+  }).join("");
+  return `<p class="lead"><b>一條線，看完客戶 12 週。</b>每一格是一週，點任何一週看 Buddy 那週怎麼陪。橘框是兩個關鍵節點：<b>W8 期中對照</b>與 <b>W13 結業成果</b>。</p>
+  <div class="stage-band">
+    <div class="stage-tag" style="background:var(--navy-lt);color:var(--navy);flex:0 0 auto;padding-left:20px;padding-right:20px;">W0 前置</div>
+    <div class="stage-tag" style="background:var(--s1)">第一階段 · 覺醒與基礎 W1–W4</div>
+    <div class="stage-tag" style="background:var(--s2)">第二階段 · 協同與強化 W5–W8</div>
+    <div class="stage-tag" style="background:var(--s3)">第三階段 · 生活與持衡 W9–W12</div>
+    <div class="stage-tag" style="background:var(--navy-lt);color:var(--navy);flex:0 0 auto;padding-left:20px;padding-right:20px;">W13 收尾</div>
+  </div>
+  <div class="phase-row">${cards}</div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--s1)"></i>覺醒與基礎</span>
+    <span><i class="dot" style="background:var(--s2)"></i>協同與強化</span>
+    <span><i class="dot" style="background:var(--s3)"></i>生活與持衡</span>
+    <span><i class="dot" style="background:var(--orange)"></i>關鍵節點 / 頭尾</span>
+  </div>
+  <div style="margin-top:34px">
+    <div style="font-size:16px;font-weight:800;color:var(--navy);margin-bottom:6px">每一週，Buddy 都跑同一套節奏</div>
+    <p class="lead" style="margin-bottom:16px">內容每週換，節奏不變。分兩層：<b>核心四觸點</b>對應專案的四個現實服務、<b>貫穿兩機制</b>是讓旅程運轉的黏合劑。每個都同時『推』（Buddy 主動送）與『拉』（引導客戶回問 RAG）。</p>
+
+    <div style="font-size:13px;font-weight:800;color:var(--green);margin-bottom:8px;display:flex;align-items:center;gap:8px"><span style="width:6px;height:16px;background:var(--green);border-radius:3px;display:inline-block"></span>核心四觸點　·　對應四個現實服務（運動／恢復／蛋白粉／衛教）</div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:22px">
+    ${CORE4.map((t,i)=>`<div style="display:grid;grid-template-columns:56px 1.5fr 1fr 1.6fr 2fr;gap:0;${i>0?'border-top:1px solid var(--line)':''};font-size:13px">
+      <div style="padding:12px;text-align:center;font-size:18px;font-weight:800;color:#fff;background:var(--green)">${t[0]}</div>
+      <div style="padding:12px 14px;font-weight:700;color:var(--navy)">${t[1]}</div>
+      <div style="padding:12px 14px;color:var(--grey)">${t[2]}</div>
+      <div style="padding:12px 14px;color:var(--ink)">${t[3]}</div>
+      <div style="padding:12px 14px;color:var(--ink)">${t[4]}</div>
+    </div>`).join("")}
+    </div>
+
+    <div style="font-size:13px;font-weight:800;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:8px"><span style="width:6px;height:16px;background:var(--navy);border-radius:3px;display:inline-block"></span>貫穿兩機制　·　不是服務，是讓旅程運轉的黏合劑</div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden">
+    ${MECH2.map((t,i)=>`<div style="display:grid;grid-template-columns:56px 1.5fr 1fr 1.6fr 2fr;gap:0;${i>0?'border-top:1px solid var(--line)':''};font-size:13px">
+      <div style="padding:12px;text-align:center;font-size:18px;font-weight:800;color:#fff;background:var(--navy)">${t[0]}</div>
+      <div style="padding:12px 14px;font-weight:700;color:var(--navy)">${t[1]}</div>
+      <div style="padding:12px 14px;color:var(--grey)">${t[2]}</div>
+      <div style="padding:12px 14px;color:var(--ink)">${t[3]}</div>
+      <div style="padding:12px 14px;color:var(--ink)">${t[4]}</div>
+    </div>`).join("")}
+    </div>
+  </div>`;
+}
+
+function view2(){
+  return `<p class="lead"><b>Buddy 的價值，不是「串起四個服務」，而是「它最了解客戶，所以能把每個服務都變成為你個人的」。</b>它靠三個來源認識客戶、有一套懂肌少症的專業知識庫，因此給出的每個提醒、衛教、關心，都是個人化的。</p>
+
+  <!-- 上游：認識客戶的三個來源 -->
+  <div style="text-align:center;font-size:13px;font-weight:800;color:var(--grey);letter-spacing:.05em;margin-bottom:12px">① Buddy 靠三個來源，認識這位客戶</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:8px">
+    ${[
+      ["📋","Onboarding 問卷","入案前暖身：為什麼不運動、對肌少的覺察、想被怎麼陪"],
+      ["🔬","DEXA 結果","前／中／後三次專業檢測，Buddy 掌握客戶真實體況與變化"],
+      ["📈","微檢站數據","12 週過程的趨勢追蹤，看進步與退步"],
+    ].map(s=>`<div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;text-align:center">
+      <div style="font-size:26px;margin-bottom:6px">${s[0]}</div>
+      <div style="font-size:15px;font-weight:800;color:var(--navy);margin-bottom:5px">${s[1]}</div>
+      <div style="font-size:12.5px;color:var(--grey);line-height:1.55">${s[2]}</div>
+    </div>`).join("")}
+  </div>
+  <div style="text-align:center;font-size:26px;color:var(--green-br);margin:2px 0">↓</div>
+
+  <!-- 中樞：Buddy + 專業知識庫 -->
+  <div style="background:linear-gradient(135deg,#1F3A5F,#2E7D5B);border-radius:16px;padding:24px 28px;color:#fff;position:relative;overflow:hidden">
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <div style="flex:1;min-width:240px">
+        <div style="font-size:20px;font-weight:800">每日衡好 Buddy</div>
+        <div style="font-size:13.5px;color:#CBD8E5;margin-top:3px">最了解這位客戶的中樞——因為它同時掌握上面三個來源，所以它能個人化。</div>
+      </div>
+      <div style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:11px 15px;min-width:210px">
+        <div style="font-size:11px;font-weight:800;color:#9BD9BC;letter-spacing:.04em;margin-bottom:4px">內建專業知識庫</div>
+        <div style="font-size:12.5px;color:#E4EEF5;line-height:1.6">懂肌少症的專業大腦：<br>肌少標籤 · 運動／營養處方 · 肌少 FAQ</div>
+        <div style="font-size:10px;color:#8FA8BC;margin-top:5px">（技術：RAG 知識庫）</div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;font-size:26px;color:var(--green-br);margin:2px 0">↓</div>
+
+  <!-- 下游：個人化輸出 -->
+  <div style="text-align:center;font-size:13px;font-weight:800;color:var(--grey);letter-spacing:.05em;margin-bottom:12px">② 因此，Buddy 個人化地串起這些服務</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:8px">
+    ${[
+      ["🏋️","運動前後關心","對到實際課表，課前提醒＋量測邀請、課後恢復引導"],
+      ["📊","量測提醒","邀請微檢站量測，把數據變成客戶看得懂的趨勢"],
+      ["🥤","蛋白粉提醒","每日補充提醒，連結當週衛教賦予意義"],
+      ["📚","衛教知識互動","27 篇轉成圖卡／互動，並可主動問 Buddy"],
+    ].map(s=>`<div style="background:var(--green-lt);border:1px solid #C9E3D5;border-radius:12px;padding:15px 14px;text-align:center">
+      <div style="font-size:24px;margin-bottom:6px">${s[0]}</div>
+      <div style="font-size:14px;font-weight:800;color:var(--green);margin-bottom:5px">${s[1]}</div>
+      <div style="font-size:12px;color:var(--ink);line-height:1.5">${s[2]}</div>
+    </div>`).join("")}
+  </div>
+  <div style="text-align:center;font-size:26px;color:var(--orange);margin:2px 0">↓</div>
+
+  <!-- 成效 -->
+  <div style="background:var(--orange);border-radius:14px;padding:20px 26px;color:#fff;text-align:center">
+    <div style="font-size:12px;font-weight:800;letter-spacing:.06em;opacity:.9;margin-bottom:4px">③ 最終目標</div>
+    <div style="font-size:20px;font-weight:800">客戶知識增加　→　成效改善</div>
+    <div style="font-size:13px;color:#FCE4D4;margin-top:6px">DEXA 前後對照證明專案有效（學術）　·　客戶帶走可持續的習慣（服務）</div>
+  </div>
+
+  <div style="margin-top:22px;background:var(--grey-lt);border-radius:12px;padding:16px 20px">
+    <div style="font-size:13.5px;font-weight:800;color:var(--navy);margin-bottom:5px">一句話</div>
+    <p style="font-size:13.5px;color:var(--ink);line-height:1.65">同樣的運動、量測、蛋白粉、衛教，別人是四個各走各的服務；在我們這裡，是<b>一個最懂你的 Buddy</b>，用它對你的了解，把這些串成一段為你個人設計的旅程——最終讓你<b>知識增加、身體真的改變</b>。</p>
+  </div>`;
+}
+
+// ===== VIEW 3 DATA: 衛教內容地圖 =====
+const CONTENT_MAP=[
+ {stage:"第一階段 · 覺醒與基礎",weeks:"W1–W4",col:"var(--s1)",
+  ex:["W1 肌肉決定你的生活品質","W2 認識不同訓練類型","W3 痠與痛的差異","W4.1 核心穩定","W4.2 柔韌度"],
+  nu:["1 肌肉是健康銀行","2 蛋白質不是有吃就好","2-1 每日蛋白質份量建議表","3 蛋白質三餐均分","4 優質蛋白：豆魚蛋肉順序"]},
+ {stage:"第二階段 · 協同與強化",weeks:"W5–W8",col:"var(--s2)",
+  ex:["W5.1 下肢肌力","W5.2 平衡能力","W6 漸進負荷與肌肉成長","W7 恢復與修復","W8 傷害處理與回歸原則"],
+  nu:["5 長肌肉也需要碳水","6 白胺酸的威力","7 維生素 D 與鈣鎂","8 抗發炎飲食"]},
+ {stage:"第三階段 · 生活與持衡",weeks:"W9–W12",col:"var(--s3)",
+  ex:["W9 上肢肌力與日常功能","W10 有氧能力與心肺健康","W11 將運動融入生活","W12 成果回顧與未來計畫"],
+  nu:["9 運動後 30 分鐘黃金比例","10 阻力運動進階指南","11 外食族防禦策略","12 長期監測與心態"]},
+];
+
+function view3(){
+  const totalEx=CONTENT_MAP.reduce((a,s)=>a+s.ex.length,0);
+  const totalNu=CONTENT_MAP.reduce((a,s)=>a+s.nu.length,0);
+  return `<p class="lead"><b>這是我們自己寫的一整套肌少症衛教庫——${totalEx+totalNu} 篇，覆蓋肌少症的每個面向。</b>運動 ${totalEx} 篇、營養 ${totalNu} 篇，依三階段編排，每篇都經醫學查證。這是 Buddy 專業知識庫的內容來源，也是整個專案最紮實的資產。</p>
+
+  <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
+    <div style="flex:1;min-width:150px;background:var(--navy);color:#fff;border-radius:12px;padding:16px 20px">
+      <div style="font-size:30px;font-weight:800">${totalEx+totalNu}</div>
+      <div style="font-size:12.5px;color:#B9C6D6">篇衛教文章（自製）</div>
+    </div>
+    <div style="flex:1;min-width:150px;background:#1F6FB2;color:#fff;border-radius:12px;padding:16px 20px">
+      <div style="font-size:30px;font-weight:800">${totalEx}</div>
+      <div style="font-size:12.5px;color:#D6E6F2">篇運動衛教</div>
+    </div>
+    <div style="flex:1;min-width:150px;background:var(--green);color:#fff;border-radius:12px;padding:16px 20px">
+      <div style="font-size:30px;font-weight:800">${totalNu}</div>
+      <div style="font-size:12.5px;color:#CDE7DA">篇營養衛教</div>
+    </div>
+    <div style="flex:1;min-width:150px;background:var(--orange);color:#fff;border-radius:12px;padding:16px 20px">
+      <div style="font-size:30px;font-weight:800">3</div>
+      <div style="font-size:12.5px;color:#FCE4D4">階段完整覆蓋</div>
+    </div>
+  </div>
+
+  ${CONTENT_MAP.map(s=>`
+  <div style="border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:16px">
+    <div style="background:${s.col};color:#fff;padding:12px 18px;display:flex;align-items:center;gap:12px">
+      <span style="font-size:15px;font-weight:800">${s.stage}</span>
+      <span style="font-size:12px;background:rgba(255,255,255,.2);border-radius:6px;padding:2px 10px">${s.weeks}</span>
+      <span style="margin-left:auto;font-size:12px;opacity:.9">${s.ex.length}＋${s.nu.length} 篇</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+      <div style="padding:14px 18px;border-right:1px solid var(--line)">
+        <div style="font-size:12px;font-weight:800;color:#1F6FB2;margin-bottom:8px">🏋️ 運動衛教</div>
+        ${s.ex.map(a=>`<div style="font-size:12.5px;color:var(--ink);padding:3px 0 3px 14px;position:relative"><span style="position:absolute;left:0;top:10px;width:5px;height:5px;border-radius:50%;background:#1F6FB2"></span>${a}</div>`).join("")}
+      </div>
+      <div style="padding:14px 18px">
+        <div style="font-size:12px;font-weight:800;color:var(--green);margin-bottom:8px">🥗 營養衛教</div>
+        ${s.nu.map(a=>`<div style="font-size:12.5px;color:var(--ink);padding:3px 0 3px 14px;position:relative"><span style="position:absolute;left:0;top:10px;width:5px;height:5px;border-radius:50%;background:var(--green)"></span>${a}</div>`).join("")}
+      </div>
+    </div>
+  </div>`).join("")}
+
+  <div style="margin-top:20px;background:var(--grey-lt);border-radius:12px;padding:16px 20px">
+    <div style="font-size:13.5px;font-weight:800;color:var(--navy);margin-bottom:5px">這套內容怎麼被用</div>
+    <p style="font-size:13px;color:var(--ink);line-height:1.65">這 ${totalEx+totalNu} 篇不是拿來「發文章」——每一篇都拆進 Buddy 的專業知識庫（可被客戶主動問），並轉譯成客戶願意點開的圖卡／互動／小測（見 Tab④ 樣本週）。<b>寫得再專業，也要讓客戶願意讀、記得住、用得上。</b></p>
+  </div>`;
+}
+
+// ===== VIEW 4 DATA: sample week (W2) daily runtime — 專業為主、互動為輔 =====
+const PRIN={
+ 1:{c:"p1",col:"#3B7A57",n:"互動手法",t:"猜題解鎖",d:"反直覺問答，猜完才揭曉專業內容"},
+ 2:{c:"p2",col:"#1F3A5F",n:"互動手法",t:"知識當工具",d:"把衛教變成解決當下情境的工具"},
+ 3:{c:"p3",col:"#C86B2B",n:"互動手法",t:"讓用戶當老師",d:"Buddy 先判斷，引發確認或反駁"},
+ 4:{c:"p4",col:"#7A4E8C",n:"互動手法",t:"懸念句",d:"只說一半，好奇帶出專業內容"},
+};
+// msg: time, h(衛教專業重點=主), n(內容), p(互動手法 0=系統節奏), svc, line(運動/營養/整合), phone
+const SAMPLES={
+ W2:{
+ wk:"W2", title:"認識訓練類型 × 蛋白質吃夠沒", stage:"第一階段 · 覺醒與基礎（養成期）",
+ sub:"精準溝通原則：Buddy 不是定時鬧鐘，是在對的時刻剛好出現。有課的日子多陪一點（課前後），養成期（W1–4）每天提醒蛋白粉但『每天換一個角度』不複讀，衛教把本週主題講到位就停。每則都通過三關：客戶現在需要嗎？對應真實動作嗎？拿掉會漏嗎？",
+ days:[
+  {d:"週一", items:[
+    {t:"08:30", h:"蛋白粉養成 · 角度1：為什麼要補", n:"養成期每日提醒，今天講『為什麼』：肌肉無法囤積蛋白，需每日穩定供應。給理由，不是命令。", p:0, svc:"蛋白粉", line:"營養", phone:"protein_mon"},
+    {t:"12:30", h:"本週營養主題開場：份量迷思", n:"客戶午休時段推本週營養主題。破除『有吃就夠』——多數人早餐蛋白幾乎為零。用猜題引發興趣，不硬塞。", p:1, svc:"衛教·營養", line:"營養", phone:"quiz"},
+  ]},
+  {d:"週二", items:[
+    {t:"15:30", h:"有課日 · 課前認識訓練類型", n:"只在有課日出現。課前講『你今天練的阻力訓練＝增肌主力』——情境對了知識才有感。", p:2, svc:"運動·衛教", line:"運動", phone:"pre_class"},
+    {t:"19:30", h:"有課日 · 課後恢復＋蛋白粉角度2", n:"客戶剛練完，這時最需要：帶恢復伸展＋順勢講『練後補蛋白』（角度2：時機）。一則兼顧恢復與補充，不另發。", p:0, svc:"運動·蛋白粉", line:"運動", phone:"post_class"},
+  ]},
+  {d:"週三", items:[
+    {t:"08:30", h:"蛋白粉養成 · 角度3：沒課也要補", n:"養成期沒課日仍提醒，但換角度：肌肉修復是 24 小時持續的，沒課日一樣要補。避免『只有運動日才補』的誤解。", p:0, svc:"蛋白粉", line:"營養", phone:"protein_wed"},
+    {t:"12:30", h:"本週營養主題深化：份量工具", n:"接續週一主題，把『一天要吃多少』變成『這餐怎麼選』的實用工具。客戶正好要吃午餐，用得上。", p:2, svc:"衛教·營養", line:"營養", phone:"tool"},
+  ]},
+  {d:"週四", items:[
+    {t:"12:30", h:"本週運動主題：三類型互補", n:"把運動衛教講到位——呼應週二課程，講阻力／有氧／伸展三者互補。用猜題，一則講完不拖泥帶水。", p:1, svc:"衛教·運動", line:"運動", phone:"ex_types"},
+  ]},
+  {d:"週五", items:[
+    {t:"15:30", h:"有課日 · 課前訓練銜接", n:"只在有課日。課前講今天課程跟週二的分工，讓客戶懂課表設計——不是重複，是補上另一塊。", p:0, svc:"運動·衛教", line:"運動", phone:"pre_class2"},
+    {t:"19:30", h:"有課日 · 課後恢復＋蛋白粉角度4", n:"剛練完：恢復伸展＋蛋白粉角度4（搭配水分與恢復）。一週兩次課後，都把恢復與補充收在一起。", p:0, svc:"運動·蛋白粉", line:"整合", phone:"post_class2"},
+  ]},
+  {d:"週六", items:[
+    {t:"10:00", h:"本週收攏：運動 × 營養交會", n:"把整週主題收成一句：練對類型 × 吃夠蛋白，肌肉才會長。週末客戶有空，用一則圖卡收束，不打擾。", p:4, svc:"衛教·整合", line:"整合", phone:"cliff"},
+  ]},
+  {d:"週日", items:[
+    {t:"19:00", h:"本週回顧（輕量）", n:"養成期回顧走輕量：完成了什麼＋一句鼓勵。不放趨勢數字（前 4 週太早），只讓客戶感覺『我有在前進』。", p:0, svc:"本週回顧", line:"整合", phone:"report"},
+  ]},
+ ]},
+
+ W9:{
+ wk:"W9", title:"把力量用回生活", stage:"第三階段 · 生活與持衡（精簡期）",
+ sub:"對照 W2：養成期過了，訊息量明顯下降。蛋白粉不再每日提醒（習慣已建立，只在有課日）、語氣從『手把手』轉成『陪伴＋把主導權交回客戶』、量測從『累積基線』進入『看趨勢』。一週約 6 則，每則一樣踩在真實需求上。",
+ days:[
+  {d:"週二", items:[
+    {t:"15:30", h:"有課日 · 課前：把訓練接回生活", n:"生活持衡期語氣更成熟。課前講『今天練上肢，對應你搬提抱的日常動作』——把訓練連到真實生活場景。", p:2, svc:"運動·衛教", line:"運動", phone:"w9_pre"},
+    {t:"19:30", h:"有課日 · 課後恢復＋蛋白粉", n:"習慣已養成，蛋白粉只在有課日順勢提醒（不再每日）。課後恢復＋補充一則收在一起。", p:0, svc:"運動·蛋白粉", line:"整合", phone:"w9_post"},
+  ]},
+  {d:"週三", items:[
+    {t:"11:00", h:"微檢站 · 趨勢對照（看趨勢週）", n:"W9 是科學上第二個看趨勢的時機。數據累積夠了，Buddy 主動把趨勢指給客戶看——回應養成期埋的『之後會看到變化』。", p:0, svc:"量測·微檢站", line:"整合", phone:"w9_trend"},
+  ]},
+  {d:"週四", items:[
+    {t:"12:30", h:"本週營養主題：運動後黃金比例", n:"把營養衛教講到位——運動後 30 分鐘補碳水＋蛋白，變成超商就能買的組合。生活化、可執行。", p:2, svc:"衛教·營養", line:"營養", phone:"w9_nutri"},
+  ]},
+  {d:"週五", items:[
+    {t:"15:30", h:"有課日 · 課前：生活應用銜接", n:"只在有課日。課前一句話帶出今天的生活應用重點，不長篇——後期客戶已熟，點到為止。", p:0, svc:"運動·衛教", line:"運動", phone:"w9_pre2"},
+    {t:"19:30", h:"有課日 · 課後恢復", n:"課後恢復伸展。後期恢復引導精簡，客戶已會做，Buddy 只提醒別偷懶。", p:0, svc:"運動", line:"運動", phone:"w9_post2"},
+  ]},
+  {d:"週日", items:[
+    {t:"19:00", h:"本週回顧（可放趨勢了）", n:"後期回顧可以放趨勢：把 W9 的微檢站趨勢＋生活改變一起回顧，讓客戶看見『我真的在變好』。語氣把成就感交還客戶。", p:0, svc:"本週回顧", line:"整合", phone:"w9_report"},
+  ]},
+ ]},
+};
+let curWeek="W2";
+const SAMPLE=SAMPLES[curWeek];
+
+
+// phone screens — 每則都演到 Buddy 給出「有料的衛教解答」，不停在問題卡
+const PHONE={
+ // ===== W9 對照週（精簡期）=====
+ w9_pre:{day:"週二 下午",seq:[
+   {t:"b",who:"Buddy",x:"今天練上肢 💪 這堂對應的是你生活裡『搬、提、抱』的動作。"},
+   {t:"b",who:"Buddy",x:"練了兩個月，你有沒有發現搬水、提菜籃比以前輕鬆了？今天上課時，感受一下手臂出力的穩定度——這就是力量用回生活的意思。"},
+ ]},
+ w9_post:{day:"週二 傍晚",seq:[
+   {t:"b",who:"Buddy",x:"今天辛苦了！恢復伸展做一下 🧘 練完那包蛋白飲記得補。"},
+   {t:"b",who:"Buddy",x:"你現在應該很熟這個節奏了——練完補蛋白已經是你的習慣。這就是前幾週我們一起養成的成果 👍"},
+ ]},
+ w9_trend:{day:"週三 上午",seq:[
+   {t:"b",who:"Buddy",x:"還記得前幾週我說『數字之後會出現』嗎？現在到了看趨勢的時候了 📈"},
+   {t:"b",who:"Buddy",x:"你的微檢站數據這幾週開始有變化了——肌肉量緩緩往上、體脂緩緩往下。這種『慢慢的、穩定的』變化，才是真的在長肌肉，比一次暴衝更可靠。"},
+   {t:"b",who:"Buddy",x:"要不要下次上課前再量一次，看看趨勢？（不勉強喔）"},
+   {t:"btns",opts:["好，我量","下次吧"]},
+ ]},
+ w9_nutri:{day:"週四 中午",seq:[
+   {t:"b",who:"Buddy",x:"你運動後那 30 分鐘，補得對嗎？這是身體吸收最好的黃金時段 ⏱️"},
+   {t:"quiz",q:"運動後補充，最理想的比例是？",opts:["只補蛋白質","碳水＋蛋白約 3:1","什麼都不補"]},
+   {t:"u",x:"碳水＋蛋白約 3:1"},
+   {t:"b",who:"Buddy",x:"對！運動後碳水幫你補充能量、蛋白質修復肌肉，約 3:1 最理想。超商就能配：地瓜＋茶葉蛋、或蛋白飲＋香蕉，走出運動中心順手買就搞定 🍠"},
+ ]},
+ w9_pre2:{day:"週五 下午",seq:[
+   {t:"b",who:"Buddy",x:"今天最後一堂 💪 一句話重點：練完的力量，記得用回生活——提東西、爬樓梯、站起身，都試著用今天練的穩定感。"},
+ ]},
+ w9_post2:{day:"週五 傍晚",seq:[
+   {t:"b",who:"Buddy",x:"這週兩堂都完成，太穩了！恢復伸展別偷懶喔 🧘 你已經知道怎麼做了，我就不囉嗦了 😄"},
+ ]},
+ w9_report:{day:"週日 晚上",seq:[
+   {t:"b",who:"Buddy",x:"第 9 週了，一起看看你走了多遠 📋"},
+   {t:"b",who:"Buddy",x:"✅ 完成 2 次課程　✅ 微檢站趨勢往好的方向走　✅ 運動後補給有跟上\n\n最棒的是——你說搬東西變輕鬆了。數據在進步，你的生活也真的在改變，這才是我們要的。"},
+   {t:"quiz",q:"這週最有感的改變是？",opts:["力氣變大","身體變輕盈","精神變好"]},
+ ]},
+
+ // ===== W2 樣本週（養成期）=====
+ protein_mon:{day:"週一 上午",seq:[
+   {t:"b",who:"Buddy",x:"新的一週，先跟你聊聊那包蛋白飲 ☕"},
+   {t:"b",who:"Buddy",x:"為什麼要每天補？因為身體沒辦法囤積蛋白質——今天吃的今天用，不能『一次補很多存著』。所以每天穩定補一點，比想到才補有效。今天這包，記得喝 🙂"},
+ ]},
+ protein_tue:{day:"週二 上午",seq:[
+   {t:"b",who:"Buddy",x:"今天有課日 💪 練完記得那一包蛋白飲。"},
+   {t:"b",who:"Buddy",x:"補充蛋白最怕『有一餐沒一餐』——身體無法囤積蛋白質，所以每天穩定攝取，比一次補很多更有效。"},
+ ]},
+ protein_wed:{day:"週三 上午",seq:[
+   {t:"b",who:"Buddy",x:"今天沒課，但也要補喔 🙂"},
+   {t:"b",who:"Buddy",x:"肌肉的修復是 24 小時持續進行的，不是只有運動當天。沒課的日子把蛋白吃夠，一樣在幫肌肉存款。"},
+ ]},
+ protein_thu:{day:"週四 上午",seq:[
+   {t:"b",who:"Buddy",x:"補起來，顧好今天的蛋白 👍"},
+   {t:"b",who:"Buddy",x:"順帶一提：蛋白質不只看『量』，也看『來源』。豆、魚、蛋、肉各有優劣——這個我們下週會細講。"},
+ ]},
+ protein_fri:{day:"週五 上午",seq:[
+   {t:"b",who:"Buddy",x:"今天有課，練完那一包記得補 💪"},
+   {t:"b",who:"Buddy",x:"一週兩次課＋每天補蛋白，你正在建立最關鍵的『規律』。肌肉最喜歡穩定的刺激與營養。"},
+ ]},
+ quiz:{day:"週一 中午",seq:[
+   {t:"b",who:"Buddy",x:"本週來聊「蛋白質吃夠了沒」。先猜猜看：茶葉蛋、無糖豆漿、雞胸肉，哪個蛋白質最低？"},
+   {t:"quiz",q:"哪個蛋白質最低？",opts:["A 茶葉蛋","B 無糖豆漿","C 雞胸肉"]},
+   {t:"u",x:"B 無糖豆漿"},
+   {t:"b",who:"Buddy",x:"答對了！一杯無糖豆漿約 7g、一顆茶葉蛋約 7g、但一份雞胸肉可達 25g 以上。重點來了——很多人早餐只有一杯豆漿，蛋白質其實遠遠不夠。"},
+   {t:"b",who:"Buddy",x:"這週我們就來把『每一餐吃夠』這件事搞定 💪"},
+ ]},
+ pre_class:{day:"週二 下午",seq:[
+   {t:"b",who:"Buddy",x:"今天下午有課！先跟你說：今天上的是「阻力訓練」——就是用器材或自身重量給肌肉負荷的訓練。"},
+   {t:"b",who:"Buddy",x:"為什麼從這個開始？因為阻力訓練是「增肌的主力」，對肌少症高風險的人最關鍵。等一下練的時候，感受一下肌肉出力的感覺 💪"},
+   {t:"b",who:"Buddy",x:"順路也可以到健康小站量一下，開始累積你的紀錄～（你的正式基準在入案前的健檢已經做過了，這裡是平常追蹤用，不勉強喔）"},
+   {t:"btns",opts:["我會去量","今天先不量"]},
+ ]},
+ post_class:{day:"週二 傍晚",seq:[
+   {t:"b",who:"Buddy",x:"今天的阻力訓練辛苦了！來做 3 分鐘伸展幫肌肉放鬆 🧘"},
+   {t:"b",who:"Buddy",x:"剛練完是補蛋白的黃金時機（角度2）——阻力訓練造成的微小損傷，配上蛋白質才能修復得好、長得壯。今天這包蛋白飲，就是幫你把剛才的努力『定型』成肌肉。"},
+ ]},
+ ex_types:{day:"週四 上午",seq:[
+   {t:"b",who:"Buddy",x:"週二練了阻力訓練，今天補充一個重要觀念——運動其實有三種類型，各有各的功用：🏋️"},
+   {t:"quiz",q:"你覺得哪一種最能『增肌』？",opts:["阻力訓練","有氧運動","伸展運動"]},
+   {t:"u",x:"阻力訓練"},
+   {t:"b",who:"Buddy",x:"對！阻力訓練＝增肌主力、有氧運動＝顧心肺與耐力、伸展運動＝維持關節活動度。三種互補，缺一不可。"},
+   {t:"b",who:"Buddy",x:"我們的課程會把三種都排進去，所以你不會只練一種。這就是為什麼有些課感覺很喘、有些課在拉筋——都是設計好的 👍"},
+ ]},
+ pre_class2:{day:"週五 下午",seq:[
+   {t:"b",who:"Buddy",x:"今天最後一堂課！今天會多一些伸展和平衡的動作，跟週二的阻力訓練分工不同。"},
+   {t:"b",who:"Buddy",x:"平衡訓練對『防跌倒』特別重要，伸展則讓活動範圍更好——搭配週二的肌力，這一週三種類型就都碰到了。"},
+   {t:"b",who:"Buddy",x:"課前有空也可以到健康小站量一下。這幾週先累積紀錄就好、還不用急著比——身體的變化需要一點時間，大約再過幾週我們一起看趨勢會更準 🙂"},
+   {t:"btns",opts:["好，我量","下次再量"]},
+ ]},
+ cliff:{day:"週六 上午",seq:[
+   {t:"b",who:"Buddy",x:"這週你認識了兩件事：運動有三種類型、蛋白質要吃夠。它們其實是同一件事的兩面——"},
+   {t:"quiz",q:"你覺得只做對其中一件，肌肉會長嗎？",opts:["會","不會","不確定"]},
+   {t:"u",x:"不會"},
+   {t:"b",who:"Buddy",x:"沒錯！練對類型（阻力訓練）給了肌肉『成長的訊號』，吃夠蛋白質給了肌肉『成長的材料』——兩個都到位，肌肉才會真的長。"},
+   {t:"b",who:"Buddy",x:"這就是為什麼我們的課程，運動跟營養一定一起顧。缺一邊，努力都會打折 💪"},
+ ]},
+ tool:{day:"週三 中午",seq:[
+   {t:"b",who:"Buddy",x:"中午了！今天便利商店午餐，我幫你配一個蛋白質達標的組合，要嗎？"},
+   {t:"btns",opts:["要，幫我配","我自己會選"]},
+   {t:"u",x:"要，幫我配"},
+   {t:"b",who:"Buddy",x:"這樣配：茶葉蛋 2 顆（14g）＋ 無糖豆漿（7g）＋ 雞胸肉沙拉（20g）≈ 41g 蛋白質，一餐就補足一大塊。"},
+   {t:"b",who:"Buddy",x:"你今天一天大概需要 XX 克（依體重估），這一餐就吃掉快一半了 👍　*示意數字，待營養師確認"},
+ ]},
+ teacher:{day:"週四 晚上",seq:[
+   {t:"b",who:"Buddy",x:"AI 幫你算了一下——你今天的蛋白質可能還差一點，準不準？🤔 跟我說你的體重，我算給你看。"},
+   {t:"btns",opts:["我報體重","我覺得我吃很夠"]},
+   {t:"u",x:"65 公斤"},
+   {t:"b",who:"Buddy",x:"以你 65 公斤、又有在做阻力訓練，一天大約需要 72–98g 蛋白質。拆成三餐，每餐大概要 24–32g。"},
+   {t:"b",who:"Buddy",x:"換算起來≈每餐一份手掌大的肉＋一份豆蛋類。回想今天早餐，有到這個量嗎？　*示意數字，待營養師確認"},
+ ]},
+ post_class2:{day:"週五 傍晚",seq:[
+   {t:"b",who:"Buddy",x:"本週兩堂課都完成，太棒了！來做恢復伸展 🧘"},
+   {t:"b",who:"Buddy",x:"恢復期別忘了補水和蛋白質——肌肉修復需要水分當介質，脫水會讓修復打折。今晚多喝點水。"},
+ ]},
+ report:{day:"週日 晚上",seq:[
+   {t:"b",who:"Buddy",x:"這週辛苦了，一起看看你完成了什麼 📋"},
+   {t:"b",who:"Buddy",x:"✅ 完成 2 次課程　✅ 蛋白補充有跟上　✅ 認識了訓練類型與蛋白份量\n\n你正在把好習慣養起來——這才是前幾週最重要的事。數字的變化之後會慢慢出現，我們不急。"},
+   {t:"quiz",q:"下週想先把哪件事顧好？",opts:["每餐吃夠蛋白","把課上好上滿","睡得更好"]},
+ ]},
+};
+
+
+
+// ONBOARDING (W0) 4-day warm-up — 活動開始前
+const ONBOARD_DAYS=[
+ {t:"Day 1", h:"邀請上傳照片", n:"體驗 Buddy 拍照分析功能。邀請上傳一餐或自己的照片，破冰、建立飲食現況印象。", svc:"功能體驗·拍照", phone:"ob_d1"},
+ {t:"Day 2", h:"健康問答（3 大問題）", n:"W0 核心：阻礙／覺察／期待各一題，讓 Buddy 記住這個人為什麼沒開始、對肌少的覺察、想被怎麼陪。", svc:"問卷·認識客戶", phone:"ob_d2"},
+ {t:"Day 3", h:"運動阻礙情境深挖", n:"延續 Day2 答案往下挖具體樣貌，Buddy 精準記住卡點，供 W1–W12 對症溝通。", svc:"深度理解", phone:"ob_d3"},
+ {t:"Day 4", h:"飲食總結", n:"Buddy 回饋這幾天理解到什麼，體驗個人化建議，讓客戶感覺『它真的懂我』，接軌 W1。", svc:"個人化·收尾", phone:"ob_d4"},
+];
+const OB_PHONE={
+ ob_d1:{day:"Day 1",seq:[
+   {t:"b",who:"Buddy",x:"嗨，我是 Buddy！👋 接下來我會陪你一起改善肌肉健康。"},
+   {t:"b",who:"Buddy",x:"先玩個簡單的——今天吃了什麼？拍張照片給我，我幫你看看營養夠不夠 📷"},
+   {t:"btns",opts:["上傳照片","等等再說"]},
+   {t:"u",x:"（上傳午餐照片）"},
+   {t:"b",who:"Buddy",x:"收到！這餐看起來澱粉多、蛋白質少一點～之後這 12 週，我會陪你把「吃對」也顧好。先記住我，有問題隨時問我 🙂"},
+ ]},
+ ob_d2:{day:"Day 2",seq:[
+   {t:"b",who:"Buddy",x:"今天想多認識你一點，這樣我才知道怎麼陪你最好。問你三個問題 👇"},
+   {t:"quiz",q:"1. 過去想運動卻沒真的動起來，最大的卡點是？",opts:["沒時間","沒動力","怕受傷","不知道怎麼做"]},
+   {t:"u",x:"沒動力"},
+   {t:"quiz",q:"2. 對「肌肉會隨年齡流失、影響行動力」，你的感覺是？",opts:["很擔心","知道但沒行動","沒想過","還跟我無關"]},
+   {t:"u",x:"知道但沒行動"},
+   {t:"b",who:"Buddy",x:"謝謝你！我記住了——你知道肌肉重要，但一直沒動力開始。這很常見，別擔心，接下來我會用你需要的方式陪你 💪"},
+ ]},
+ ob_d3:{day:"Day 3",seq:[
+   {t:"b",who:"Buddy",x:"昨天你說「沒動力」——我想更懂你一點。以下哪個最像你的情況？"},
+   {t:"quiz",q:"「沒動力」的你，比較像？",opts:["一忙就忘了","累了不想動","一個人懶得動","看不到效果就放棄"]},
+   {t:"u",x:"看不到效果就放棄"},
+   {t:"b",who:"Buddy",x:"了解了！你需要的是「看得到進步」。這點我幫你記起來——之後每次量測、每週回顧，我都會特別把你的變化指給你看，讓你知道努力有用 📈"},
+ ]},
+ ob_d4:{day:"Day 4",seq:[
+   {t:"b",who:"Buddy",x:"這幾天謝謝你陪我暖身！我大概認識你了，幫你做個小總結 📋"},
+   {t:"b",who:"Buddy",x:"✅ 你想改善肌肉、但過去卡在「沒動力、看不到效果」\n✅ 飲食上蛋白質可以再多一點\n\n接下來 12 週，我會用「讓你看見進步」的方式陪你。下週正式開始，我們一起 💪"},
+   {t:"btns",opts:["準備好了！","有點緊張"]},
+ ]},
+};
+
+const OTHERWEEKS=[
+ ["W1","var(--s1)","肌肉決定生活品質","肌肉是健康銀行","運動＋營養同軸：肌肉為何值得投資","課程正式啟動"],
+ ["W2","var(--s1)","認識不同訓練類型","蛋白質不是有吃就好","練對類型 × 吃夠蛋白（樣本週）","建立每日蛋白補充習慣"],
+ ["W3","var(--s1)","痠與痛的差異","蛋白質三餐均分","安全辨識 × 修復營養","分辨痠與痛·安全上課"],
+ ["W4","var(--s1)","核心與柔韌","優質蛋白新順序","地基訓練 × 蛋白質選擇","第一階段收尾"],
+ ["W5","var(--s2)","下肢肌力與平衡","長肌肉也需要碳水","下肢訓練 × 碳水破迷思","微檢站·首次看趨勢"],
+ ["W6","var(--s2)","漸進負荷與成長","白胺酸的威力","肌肉怎麼長 × 補對胺基酸","進階負荷起步"],
+ ["W7","var(--s2)","恢復與修復","維生素 D 與鈣鎂","休息也是訓練 × 關鍵營養素","恢復日·強調休息"],
+ ["W8","var(--orange)","傷害處理與回歸","抗發炎飲食","期中對照 × 保護肌肉","DEXA 中測·領粉"],
+ ["W9","var(--s3)","上肢與日常功能","運動後黃金比例","把力量用回生活 × 補給時機","微檢站·趨勢對照"],
+ ["W10","var(--s3)","有氧與心肺","阻力運動進階","心肺補拼圖 × 進階刺激","訓練強度高峰"],
+ ["W11","var(--s3)","運動融入生活","外食族防禦策略","居家可持續 × 外食吃夠","居家動作·畢業準備"],
+ ["W12","var(--s3)","成果回顧與計畫","長期監測與心態","12 週回顧 × 長期維持","為 W13 後測準備"],
+];
+
+let curPhone="quiz";
+let curOB="ob_d2";
+function view4(){
+  const SW=SAMPLES[curWeek];
+  const wkBanner = curWeek==="W2"
+    ? {tag:"W2 本週核心主題",col1:"var(--s1)",theme:"長肌肉要「訊號 ＋ 材料」",ex:"阻力訓練＝成長訊號",nu:"蛋白質＝蓋肌肉的材料"}
+    : {tag:"W9 本週核心主題",col1:"var(--s3)",theme:"把力量用回生活",ex:"上肢訓練＝生活功能",nu:"運動後黃金比例＝補給時機"};
+  let tl="";
+  const lineCol={"運動":"#1F6FB2","營養":"#2E7D5B","整合":"#7A4E8C"};
+  SW.days.forEach(day=>{
+    tl+=`<div class="tl-day"><span class="tl-daylabel">${day.d}</span>`;
+    day.items.forEach(m=>{
+      const method=m.p?`<span class="tag-p" style="background:${PRIN[m.p].col}">互動：${PRIN[m.p].t}</span>`:`<span class="tag-c">系統節奏</span>`;
+      const lineLabel={"運動":"運動扣題","營養":"營養扣題","整合":"主題收攏"};
+      const linetag=m.line?`<span class="tag-p" style="background:${lineCol[m.line]}">${lineLabel[m.line]}</span>`:"";
+      const svc=`<span class="tag-svc">${m.svc}</span>`;
+      const act=(m.phone===curPhone)?' act':'';
+      tl+=`<div class="msg${act}" onclick="setPhone('${m.phone}',this)">
+        <div class="time">${m.t}</div>
+        <div class="body"><div class="mt">${m.h}</div><div class="mm">${m.n}</div>
+        <div class="tags">${linetag}${svc}${method}</div></div></div>`;
+    });
+    tl+=`</div>`;
+  });
+  const obRows=ONBOARD_DAYS.map(d=>{
+    const act=(d.phone===curPhone)?' act':'';
+    return `<div class="msg${act}" onclick="setPhone('${d.phone}',this)">
+      <div class="time">${d.t}</div>
+      <div class="body"><div class="mt">${d.h}</div><div class="mm">${d.n}</div>
+      <div class="tags"><span class="tag-svc">${d.svc}</span></div></div></div>`;
+  }).join("");
+  return `<p class="lead"><b>精準溝通，不是硬推：Buddy 在對的時刻剛好出現，不是每天定時轟炸。</b>有課的日子多陪一點（課前後）、養成期每天提醒蛋白粉但每天換角度不複讀、衛教把本週主題講到位就停。每則都先過三關——<b>是客戶需要的嗎？對應真實動作嗎？拿掉會漏掉什麼嗎？</b>不是客戶需要的就不發。點左邊任一則看 Buddy 實際講什麼。</p>
+
+  <div style="background:#FDF4EC;border:1px solid #F0D9C4;border-radius:14px;padding:20px 22px;margin-bottom:28px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+      <span style="font-size:12px;font-weight:800;color:#fff;background:var(--orange);border-radius:6px;padding:3px 11px">W0 暖身</span>
+      <h3 style="font-size:18px;font-weight:800;color:var(--navy)">活動開始前：4 天 Onboarding</h3>
+    </div>
+    <p style="font-size:13px;color:var(--grey);margin-bottom:14px;line-height:1.6">正式 12 週前的暖身——讓客戶加入 Buddy、熟悉功能，Buddy 開始認識這個人。<b>核心是 Day2 的 3 大問題（阻礙／覺察／期待）</b>，讓 Buddy 記住「為什麼不運動」，後面每週才能對症溝通。點下方任一天看實際對話。</p>
+    <div style="display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start">
+      <div class="timeline">${obRows}</div>
+      <div class="phone-wrap" style="position:static">
+        <div class="phone"><div class="notch"></div><div class="pscreen" id="pscreen_ob"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <span style="font-size:13px;font-weight:800;color:var(--navy)">看哪一週：</span>
+    <button onclick="setWeek('W2')" style="border:1.5px solid ${curWeek==='W2'?'var(--s1)':'var(--line)'};background:${curWeek==='W2'?'var(--s1)':'#fff'};color:${curWeek==='W2'?'#fff':'var(--grey)'};border-radius:20px;padding:6px 16px;font-size:13px;font-weight:700;cursor:pointer">W2 養成期</button>
+    <button onclick="setWeek('W9')" style="border:1.5px solid ${curWeek==='W9'?'var(--s3)':'var(--line)'};background:${curWeek==='W9'?'var(--s3)':'#fff'};color:${curWeek==='W9'?'#fff':'var(--grey)'};border-radius:20px;padding:6px 16px;font-size:13px;font-weight:700;cursor:pointer">W9 精簡期</button>
+    <span style="font-size:12px;color:var(--grey);margin-left:4px">← 對照養成期 vs 後期，看訊息量怎麼降下來</span>
+  </div>
+  <div class="runtime">
+    <div>
+      <div style="background:linear-gradient(135deg,#1F3A5F,#2E7D5B);border-radius:12px;padding:13px 18px;margin-bottom:14px">
+        <div style="font-size:11px;font-weight:700;color:#B9D4C8;letter-spacing:.06em">${wkBanner.tag}</div>
+        <div style="font-size:18px;font-weight:800;color:#fff;margin-top:2px">${wkBanner.theme}</div>
+        <div style="font-size:12px;color:#CBD8E5;margin-top:4px"><span style="color:#8Fc9ea">運動</span>：${wkBanner.ex}　·　<span style="color:#9BD9BC">營養</span>：${wkBanner.nu}</div>
+      </div>
+      <div class="tl-head"><span class="wk" style="background:${wkBanner.col1}">${SW.wk}</span><h3>${SW.title}</h3></div>
+      <div class="tl-sub">${SW.sub}</div>
+      <div style="display:flex;gap:14px;margin:6px 0 14px;font-size:12px;color:var(--grey)">
+        <span style="display:inline-flex;align-items:center;gap:5px"><i style="width:11px;height:11px;border-radius:3px;background:#1F6FB2;display:inline-block"></i>運動衛教（扣主題）</span>
+        <span style="display:inline-flex;align-items:center;gap:5px"><i style="width:11px;height:11px;border-radius:3px;background:#2E7D5B;display:inline-block"></i>營養衛教（扣主題）</span>
+        <span style="display:inline-flex;align-items:center;gap:5px"><i style="width:11px;height:11px;border-radius:3px;background:#7A4E8C;display:inline-block"></i>主題收攏</span>
+      </div>
+      <div class="timeline">${tl}</div>
+    </div>
+    <div class="phone-wrap">
+      <span class="pill-hint">👆 點左側訊息，看 Buddy 實際講什麼</span>
+      <div class="phone"><div class="notch"></div><div class="pscreen" id="pscreen"></div></div>
+      <div class="pcaption">Buddy 對話示意（LINE 介面）</div>
+    </div>
+  </div>`;
+}
+
+function buildScreen(P){
+  let seq=P.seq.map(s=>{
+    if(s.t==="b")return `<div class="bmsg"><div class="who">${s.who}</div>${s.x.replace(/\n/g,"<br>")}</div>`;
+    if(s.t==="u")return `<div class="umsg">${s.x}</div>`;
+    if(s.t==="btns")return `<div class="pbtns">${s.opts.map(o=>`<div class="pbtn">${o}</div>`).join("")}</div>`;
+    if(s.t==="quiz")return `<div class="pquiz"><div class="q">${s.q}</div>${s.opts.map(o=>`<div class="opt">${o}</div>`).join("")}</div>`;
+    return "";
+  }).join("");
+  return `<div class="pbar"><div class="av">🐸</div><div><div class="nm">每日衡好 Buddy</div><div class="st">健康陪跑中</div></div></div>
+    <div class="pbody"><div class="pday">${P.day}</div>${seq}</div>`;
+}
+function renderPhone(){
+  const el=document.getElementById("pscreen");
+  if(el&&PHONE[curPhone])el.innerHTML=buildScreen(PHONE[curPhone]);
+  const elo=document.getElementById("pscreen_ob");
+  if(elo&&OB_PHONE[curOB])elo.innerHTML=buildScreen(OB_PHONE[curOB]);
+}
+function setPhone(k,el){
+  if(OB_PHONE[k]){ curOB=k; document.getElementById("pscreen_ob").innerHTML=buildScreen(OB_PHONE[k]); }
+  else { curPhone=k; document.getElementById("pscreen").innerHTML=buildScreen(PHONE[k]); }
+  document.querySelectorAll("#views .msg").forEach(m=>m.classList.remove("act"));
+  if(el)el.classList.add("act");
+}
+
+function openWk(i){
+  const w=WEEKS[i];const col=stageColOf(w);
+  const stageName=w.milestone?"關鍵節點":(w.st?`第${w.st==='S1'?'一':w.st==='S2'?'二':'三'}階段 · ${STAGE[w.st].name}`:(w.book?"旅程頭尾":""));
+  const TH=THEMES[w.w];
+  let pair=TH?`
+  <div style="background:linear-gradient(135deg,#1F3A5F,#2E7D5B);border-radius:12px;padding:14px 18px;margin-bottom:8px">
+    <div style="font-size:11px;font-weight:700;color:#B9D4C8;letter-spacing:.06em;margin-bottom:3px">本週核心主題</div>
+    <div style="font-size:19px;font-weight:800;color:#fff">${TH.theme}</div>
+    <div style="font-size:12px;color:#CBD8E5;margin-top:5px">🔗 環扣：${TH.link}</div>
+  </div>
+  <div style="font-size:12px;color:var(--grey);margin:6px 0 8px">運動與營養一起扣住這個主題，各出重點、缺一不可：</div>
+  <div class="pair">
+    <div class="pc ex" style="border-top:3px solid #1F6FB2"><div class="pl" style="color:#1F6FB2">🏋️ 運動衛教 扣題重點</div><div class="pd">${w.ex?w.ex[0]:""}</div><div class="pa">${TH.ex}</div></div>
+    <div class="pc nu" style="border-top:3px solid #2E7D5B"><div class="pl" style="color:#2E7D5B">🥗 營養衛教 扣題重點</div><div class="pd">${w.nu?w.nu[0]:""}</div><div class="pa">${TH.nu}</div></div>
+  </div>`:"";
+  let msg=`<div class="sec"><div class="st"><span class="si">1</span>這一週要溝通什麼</div><ul>${w.msg.map(m=>`<li>${m}</li>`).join("")}</ul></div>`;
+  let hook=`<div class="sec"><div class="st"><span class="si">2</span>為什麼客戶要在意（痛點鉤子）</div><div class="hookbox">${w.hook}</div></div>`;
+  let how=`<div class="sec"><div class="st"><span class="si">3</span>怎麼溝通：形式與方法</div><ul>${w.how.map(h=>`<li><b style="color:var(--orange)">${h[0]}</b>　${h[1]}</li>`).join("")}</ul></div>`;
+  let open=`<div class="sec"><div class="st"><span class="si">4</span>Buddy 開場（push）</div><div class="buddybox"><span class="bl">Buddy：</span>${w.open}${w.btn?`<div class="btns"><b>按鈕：</b>${w.btn}</div>`:""}</div></div>`;
+  let rag=w.rag?`<div class="sec"><div class="st"><span class="si">5</span>埋進 RAG 的可問問題（pull）</div><ul>${w.rag.map(r=>`<li>${r}</li>`).join("")}</ul></div>`:"";
+  let onboard=w.onboard?`<div class="sec"><div class="st"><span class="si">📅</span>4 天 Onboarding 節奏</div>
+    ${w.onboard.map(d=>`<div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)">
+      <div style="font-size:12px;font-weight:800;color:#fff;background:var(--orange);border-radius:6px;padding:3px 10px;height:fit-content;white-space:nowrap">${d[0]}</div>
+      <div><div style="font-size:13.5px;font-weight:700;color:var(--navy);margin-bottom:2px">${d[1]}</div>
+      <div style="font-size:12.5px;color:var(--grey);line-height:1.5">${d[2]}</div></div>
+    </div>`).join("")}</div>`:"";
+  let tp=`<div class="sec"><div class="st"><span class="si">＋</span>本週其他觸點</div><div class="tp-mini">${w.tp.map(t=>`<div class="tk">${t[0]}</div><div class="tv">${t[1]}</div>`).join("")}</div></div>`;
+  document.getElementById("modal").innerHTML=`
+    <div class="mh" style="background:${col}">
+      <button class="x" onclick="closeWk()">×</button>
+      <div class="mtag">${w.w}　${stageName}</div>
+      <div class="mtitle">${w.t}</div>
+      <div class="msub">${w.sub}</div>
+    </div>
+    <div class="mb">${pair}${msg}${hook}${onboard}${how}${open}${rag}${tp}</div>`;
+  document.getElementById("mask").classList.add("on");
+}
+function closeWk(){document.getElementById("mask").classList.remove("on");}
+document.getElementById("mask").addEventListener("click",e=>{if(e.target.id==="mask")closeWk();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeWk();});
+
+function setWeek(wk){
+  curWeek=wk;
+  // pick a sensible default phone for the week
+  curPhone = wk==="W2" ? "quiz" : "w9_trend";
+  render(4);
+}
+function render(v){
+  document.getElementById("views").innerHTML=v===1?view1():v===2?view2():v===3?view3():view4();
+  if(v===4)renderPhone();
+}
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+  t.classList.add("on");
+  render(+t.dataset.v);
+  window.scrollTo({top:0,behavior:"smooth"});
+}));
+render(1);
+</script>
+</body>
+</html>
